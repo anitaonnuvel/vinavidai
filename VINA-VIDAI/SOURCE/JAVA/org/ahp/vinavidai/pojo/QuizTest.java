@@ -1,0 +1,23 @@
+//TEST_QUIZ
+//TEST_ID,
+//QUIZ_ID,
+//NUM_OF_ATTEMPTS
+//USER_ID
+//
+//
+//TEST
+//TEST_ID,
+//QUESTION
+//OPTION
+//
+//TEST_RESULTS
+//TEST_ID,
+//RESULT
+//
+//
+//
+//QuizGroup
+//GroupId,QuizId
+//
+//User
+// UserId,GroupId,QuizId
