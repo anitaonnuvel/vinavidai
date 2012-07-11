@@ -7,8 +7,8 @@ import org.ahp.test.AhpBastTest;
 import org.junit.Test;
 
 /**
- * 
- * @author Shankar Karthik Vaithianathan
+ *
+ * @author 	Anita Onnuvel
  *
  */
 public class TestAhpXPathUtil extends AhpBastTest {
