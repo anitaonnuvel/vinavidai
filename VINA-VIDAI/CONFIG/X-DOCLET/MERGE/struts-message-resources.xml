@@ -1,2 +1,0 @@
-<message-resources parameter="org.ahp.login.resources.LoginResources" key="login" null="false"/>
-<message-resources parameter="org.ahp.vinavidai.resources.VinaVidaiResources" key="vinavidai" null="false"/>

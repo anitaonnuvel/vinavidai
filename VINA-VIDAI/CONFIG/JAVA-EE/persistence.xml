@@ -1,7 +1,0 @@
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
-    <persistence-unit name="vinavidai" transaction-type="RESOURCE_LOCAL">
-    <properties>
-         <property name="hibernate.ejb.use_class_enhancer" value="true"/>
-    </properties>
-    </persistence-unit>
-</persistence>

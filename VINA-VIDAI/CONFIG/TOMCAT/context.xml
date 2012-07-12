@@ -1,4 +1,0 @@
-<Context path="/vinavidai" 
-         docBase="vinavidai">
-    <Loader loaderClass="org.springframework.instrument.classloading.tomcat.TomcatInstrumentableClassLoader"/>
-</Context>
