@@ -1,0 +1,7 @@
+ahp.db.hibernate.database=HSQL
+ahp.db.hibernate.databasePlatform=org.hibernate.dialect.HSQLDialect
+ahp.db.jdbc.driverClassName= org.hsqldb.jdbcDriver
+ahp.db.jdbc.url=jdbc:hsqldb:hsql://localhost/vinavidaidb
+#ahp.db.jdbc.url=jdbc:hsqldb:C:/WORK/PROJECTS/PROJECTS-DB/DEV/vinavidaidb
+ahp.db.jdbc.username=sa
+ahp.db.jdbc.password=
