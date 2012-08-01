@@ -1,0 +1,98 @@
+<wsdl:definitions name="QuizService" 
+                  targetNamespace="http://quiz.services.vinavidai.ahp.org/" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+                  xmlns:tns="http://quiz.services.vinavidai.ahp.org/" 
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+                   xmlns:tns="http://quiz.services.vinavidai.ahp.org/" 
+                   attributeFormDefault="unqualified" 
+                   elementFormDefault="unqualified" 
+                   targetNamespace="http://quiz.services.vinavidai.ahp.org/">
+
+            <xs:element name="getQuizInfoByNameRequest" type="tns:getQuizInfoByNameRequest"/>
+            <xs:complexType name="getQuizInfoByNameRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="getQuizInfoByNameResponse" type="tns:getQuizInfoByNameResponse"/>
+            <xs:complexType name="getQuizInfoByNameResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:quiz"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="quiz">
+                <xs:sequence>
+                    <xs:element name="quizId" type="xs:int"/>
+                    <xs:element minOccurs="0" name="quizName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="quizDescription" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="NoSuchQuiz" type="tns:NoSuchQuiz"/>
+            <xs:complexType name="NoSuchQuiz">
+                <xs:sequence>
+                    <xs:element name="quizNameName" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="getQuizInfoByNameRequest">
+        <wsdl:part name="parameters" element="tns:getQuizInfoByNameRequest">
+        </wsdl:part>
+    </wsdl:message>
+    
+    <wsdl:message name="getQuizInfoByNameResponse">
+        <wsdl:part name="parameters" element="tns:getQuizInfoByNameResponse">
+        </wsdl:part>
+    </wsdl:message>
+            
+    <wsdl:message name="NoSuchQuizException">
+        <wsdl:part name="NoSuchQuizException" element="tns:NoSuchQuiz">
+        </wsdl:part>
+    </wsdl:message>
+    
+    <wsdl:portType name="QuizService">       
+        <wsdl:operation name="getQuizInfoByName">
+            <wsdl:input name="getQuizInfoByNameInput" message="tns:getQuizInfoByNameRequest">
+            </wsdl:input>
+            <wsdl:output name="getQuizInfoByNameOutput" message="tns:getQuizInfoByNameResponse">
+            </wsdl:output>
+            <wsdl:fault name="NoSuchQuizFault" message="tns:NoSuchQuizException">
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="QuizServiceBindingSoap" type="tns:QuizService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getQuizInfoByName">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getQuizInfoByNameInput">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getQuizInfoByNameOutput">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NoSuchQuizFault">
+                <soap:fault name="NoSuchQuizFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="QuizServiceService">
+        <wsdl:port name="QuizServicePort" binding="tns:QuizServiceBindingSoap">
+        <!-- embedded deployment 
+        <soap:address location="http://localhost:9090/QuizServicePort"/>
+        -->
+        <!-- standalone Tomcat deployment -->
+        <soap:address location="http://localhost:8080/vinavidai/services/QuizService"/>
+        </wsdl:port>
+    </wsdl:service>
+    
+</wsdl:definitions>
