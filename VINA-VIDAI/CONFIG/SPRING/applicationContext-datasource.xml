@@ -18,11 +18,9 @@
         <property name="jdbcUrl" value="${ahp.db.jdbc.url}"/>
         <property name="user" value="${ahp.db.jdbc.username}" /> 
         <property name="password" value="${ahp.db.jdbc.password}"/> 
+        <property name="minPoolSize" value="${ahp.db.jdbc.pool.minsize}"/>
+        <property name="maxPoolSize" value="${ahp.db.jdbc.pool.maxsize}"/>
+        <property name="acquireIncrement" value="${ahp.db.jdbc.pool.increment}"/>
     </bean>
     
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location">
-	    <value>/WEB-INF/ahp.db.properties</value>
-	</property>
-    </bean>
 </beans>

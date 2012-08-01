@@ -61,8 +61,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DisplayEditQuestion extends AhpAbstractDisplayAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( ProcessEditQuestion.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( ProcessEditQuestion.class );
 
     private QuizService mQuizService;
 
@@ -71,36 +70,27 @@ public class DisplayEditQuestion extends AhpAbstractDisplayAction {
     }
 
     @Override
-    public ActionForward display( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward display( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         EditQuestionForm lEditQuestionForm = ( EditQuestionForm ) pActionForm;
-        String lNextPage = StringUtils.trimToEmpty( lEditQuestionForm
-                .getNextPage() );
-        ActionForward lActionForward = pActionMapping
-                .findForward( NavigateActions.DisplayEditQuestion.toString() );
+        String lNextPage = StringUtils.trimToEmpty( lEditQuestionForm.getNextPage() );
+        ActionForward lActionForward = pActionMapping.findForward( NavigateActions.DisplayEditQuestion.toString() );
         if ( NavigateActions.DisplayEditQuestion.toString().equals( lNextPage )
-                || NavigateActions.DisplayEditQuestionNext.toString().equals(
-                        lNextPage ) ) {
+                || NavigateActions.DisplayEditQuestionNext.toString().equals( lNextPage ) ) {
             if ( lEditQuestionForm.isSubmitAction( SubmitActions.EMPTY ) ) {
-                Quiz lQuiz = ( Quiz ) pHttpServletRequest.getSession()
-                        .getAttribute( QUIZ_UNDER_CREATION );
+                Quiz lQuiz = ( Quiz ) pHttpServletRequest.getSession().getAttribute( QUIZ_UNDER_CREATION );
                 if ( lQuiz != null )
                     lEditQuestionForm.setQuiz( lQuiz );
                 this.setDefaultValues( lEditQuestionForm );
-                pHttpServletRequest.getSession().removeAttribute(
-                        QUIZ_UNDER_CREATION );
+                pHttpServletRequest.getSession().removeAttribute( QUIZ_UNDER_CREATION );
             }
             if ( lEditQuestionForm.isSubmitAction( SubmitActions.NEXT ) ) {
-                Quiz lQuiz = ( Quiz ) pHttpServletRequest.getSession()
-                        .getAttribute( QUIZ_UNDER_CREATION );
+                Quiz lQuiz = ( Quiz ) pHttpServletRequest.getSession().getAttribute( QUIZ_UNDER_CREATION );
                 if ( lQuiz != null )
                     lEditQuestionForm.setQuiz( lQuiz );
                 this.setDefaultValues( lEditQuestionForm );
-                pHttpServletRequest.getSession().removeAttribute(
-                        QUIZ_UNDER_CREATION );
+                pHttpServletRequest.getSession().removeAttribute( QUIZ_UNDER_CREATION );
             }
             if ( lEditQuestionForm.isSubmitAction( SubmitActions.ADD_OPTION ) ) {
                 Option lOption = new Option();
@@ -108,8 +98,7 @@ public class DisplayEditQuestion extends AhpAbstractDisplayAction {
                 lEditQuestionForm.getOptions().add( lOption );
             }
             if ( lEditQuestionForm.isSubmitAction( SubmitActions.DELETE_OPTION ) ) {
-                int lDeleteIndex = Integer.parseInt( lEditQuestionForm
-                        .getHiddenDeleteOptionIndex() );
+                int lDeleteIndex = Integer.parseInt( lEditQuestionForm.getHiddenDeleteOptionIndex() );
                 if ( lEditQuestionForm.getOptions().size() > lDeleteIndex )
                     lEditQuestionForm.getOptions().remove( lDeleteIndex );
                 while ( lEditQuestionForm.getOptions().size() < 3 ) {
@@ -125,16 +114,11 @@ public class DisplayEditQuestion extends AhpAbstractDisplayAction {
         if ( NavigateActions.DisplayEditQuiz.toString().equals( lNextPage ) ) {
 
         }
-        if ( NavigateActions.DisplayEditQuizConfirmation.toString().equals(
-                lNextPage ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayEditQuestionConfirmation
-                            .toString() );
+        if ( NavigateActions.DisplayEditQuizConfirmation.toString().equals( lNextPage ) ) {
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayEditQuestionConfirmation.toString() );
         }
-        if ( NavigateActions.DisplayEditQuizCancelled.toString().equals(
-                lNextPage ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayQuizConsole.toString() );
+        if ( NavigateActions.DisplayEditQuizCancelled.toString().equals( lNextPage ) ) {
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayQuizConsole.toString() );
         }
         return lActionForward;
     }

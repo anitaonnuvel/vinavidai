@@ -40,17 +40,14 @@ public class BaseValidator extends AbstractValidator {
      * @param pErrorKeyPrefix
      */
     @SuppressWarnings("unchecked")
-    public static void validateLoginName( String pLoginName,
-            ActionErrors pActionErrors, String pErrorKeyPrefix ) {
+    public static void validateLoginName( String pLoginName, ActionErrors pActionErrors, String pErrorKeyPrefix ) {
         Set<String> lErrorKeySet = new LinkedHashSet<String>();
         if ( pLoginName == null || "".equals( pLoginName ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".loginname.required" );
-            AbstractValidator
-                    .populateActionErrors( pActionErrors, lErrorKeySet );
+            AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
             return;
         }
-        if ( !ValidatorUtil.validateAllowedCharacters( pLoginName,
-                EMAIL_ADDRESS_ALLOWED_REGEX ) ) {
+        if ( !ValidatorUtil.validateAllowedCharacters( pLoginName, EMAIL_ADDRESS_ALLOWED_REGEX ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".loginname.notvalid" );
         }
         AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
@@ -63,14 +60,12 @@ public class BaseValidator extends AbstractValidator {
      * @param pErrorKeyPrefix
      */
     @SuppressWarnings("unchecked")
-    public static void validateLoginPassword( String pLoginPassword,
-            ActionErrors pActionErrors, String pErrorKeyPrefix ) {
+    public static void validateLoginPassword( String pLoginPassword, ActionErrors pActionErrors, String pErrorKeyPrefix ) {
 
         Set<String> lErrorKeySet = new LinkedHashSet<String>();
         if ( pLoginPassword == null || "".equals( pLoginPassword ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".password.required" );
-            AbstractValidator
-                    .populateActionErrors( pActionErrors, lErrorKeySet );
+            AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
             return;
         }
 

@@ -32,9 +32,12 @@ import org.ahp.core.managers.IAhpBootstrapManager;
  * 
  * @author Anita Onnuvel
  * 
- * @spring.bean id="ahpBootstrapListener"
+ * @spring.bean 
+ *     id="ahpBootstrapListener"
  * 
- * @spring.property name="ahpBootstrapManager" ref="ahpBootstrapManager"
+ * @spring.property 
+ *     name="ahpBootstrapManager" 
+ *     ref="ahpBootstrapManager"
  */
 public class AhpBootstrapListener implements ServletContextListener {
 
@@ -51,8 +54,7 @@ public class AhpBootstrapListener implements ServletContextListener {
      * 
      * @param pAhpBootstrapManager
      */
-    public void setAhpBootstrapManager(
-            IAhpBootstrapManager pAhpBootstrapManager ) {
+    public void setAhpBootstrapManager( IAhpBootstrapManager pAhpBootstrapManager ) {
         this.mAhpBootstrapManager = pAhpBootstrapManager;
     }
 
@@ -62,29 +64,21 @@ public class AhpBootstrapListener implements ServletContextListener {
      */
     public void contextInitialized( ServletContextEvent pServletContextEvent ) {
         try {
-            ServletContext lServletContext = pServletContextEvent
-                    .getServletContext();
-            String lAhpConfiguration = lServletContext
-                    .getInitParameter( AHP_CONFIGURATION );
+            ServletContext lServletContext = pServletContextEvent.getServletContext();
+            String lAhpConfiguration = lServletContext.getInitParameter( AHP_CONFIGURATION );
             String lRealPath = lServletContext.getRealPath( "/" );
             StringBuilder lAhpConfigurationFileStringBuilder = new StringBuilder();
             for ( String lAhpConfigFile : lAhpConfiguration.split( "," ) ) {
                 if ( !AhpResourceUtil.isClassPathResource( lAhpConfigFile )
-                        || !AhpResourceUtil
-                                .isClassPathResource( lAhpConfigFile ) ) {
-                    Path lAhpConfigurationFilePath = Paths.get( lRealPath
-                            + lAhpConfigFile );
-                    lAhpConfigurationFileStringBuilder
-                            .append( lAhpConfigurationFilePath.toUri() + "," );
+                        || !AhpResourceUtil.isClassPathResource( lAhpConfigFile ) ) {
+                    Path lAhpConfigurationFilePath = Paths.get( lRealPath + lAhpConfigFile );
+                    lAhpConfigurationFileStringBuilder.append( lAhpConfigurationFilePath.toUri() + "," );
                 } else {
                     lAhpConfigurationFileStringBuilder.append( lAhpConfigFile );
                 }
             }
-            System.out.println( "ConfigurationFiles - "
-                    + lAhpConfigurationFileStringBuilder.toString() );
-            this.mAhpBootstrapManager.bootstrap(
-                    lAhpConfigurationFileStringBuilder.toString().split( "," ),
-                    lRealPath );
+            System.out.println( "ConfigurationFiles - " + lAhpConfigurationFileStringBuilder.toString() );
+            this.mAhpBootstrapManager.bootstrap( lAhpConfigurationFileStringBuilder.toString().split( "," ), lRealPath );
         } catch ( AhpRuntimeException exAhpRuntime ) {
             throw exAhpRuntime;
         } catch ( Exception ex ) {

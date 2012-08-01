@@ -28,5 +28,7 @@ public class ValidatorConstants {
     public static final String ALPHA_NUMERIC_ALLOWED_REGEX = "[A-Za-z0-9]*";
     public static final String ALPHA_ALLOWED_REGEX = "[A-Za-z]*";
     public static final String NUMERIC_ALLOWED_REGEX = "[0-9]*";
+    public static final String FIRST_LAST_NAME_ALLOWED_REGEX = "[A-Za-z0-9 -/\\.,]{1,60}";
+    public static final String PASSWORD_ALLOWED_REGEX = "[A-Za-z0-9]*{8,20}";
 
 }

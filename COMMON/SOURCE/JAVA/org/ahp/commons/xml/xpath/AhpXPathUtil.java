@@ -95,8 +95,7 @@ public final class AhpXPathUtil {
      * @param pXPathVariableResolver
      *            the new x path variable resolver
      */
-    public void setXPathVariableResolver(
-            XPathVariableResolver pXPathVariableResolver ) {
+    public void setXPathVariableResolver( XPathVariableResolver pXPathVariableResolver ) {
         this.mXPathVariableResolver = pXPathVariableResolver;
     }
 
@@ -106,8 +105,7 @@ public final class AhpXPathUtil {
      * @param pXPathFunctionResolver
      *            the new x path function resolver
      */
-    public void setXPathFunctionResolver(
-            XPathFunctionResolver pXPathFunctionResolver ) {
+    public void setXPathFunctionResolver( XPathFunctionResolver pXPathFunctionResolver ) {
         this.mXPathFunctionResolver = pXPathFunctionResolver;
     }
 
@@ -123,8 +121,7 @@ public final class AhpXPathUtil {
     public String getAsString( Node pDocument, String pExpression ) {
         String lStringValue;
         try {
-            lStringValue = ( String ) this.mXPath.evaluate( pExpression,
-                    pDocument, XPathConstants.STRING );
+            lStringValue = ( String ) this.mXPath.evaluate( pExpression, pDocument, XPathConstants.STRING );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
         }
@@ -143,8 +140,7 @@ public final class AhpXPathUtil {
     public Boolean getAsBoolean( Node pDocument, String pExpression ) {
         Boolean lBooleanValue;
         try {
-            lBooleanValue = ( Boolean ) this.mXPath.evaluate( pExpression,
-                    pDocument, XPathConstants.BOOLEAN );
+            lBooleanValue = ( Boolean ) this.mXPath.evaluate( pExpression, pDocument, XPathConstants.BOOLEAN );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
         }
@@ -163,8 +159,7 @@ public final class AhpXPathUtil {
     public Node getAsNode( Node pDocument, String pExpression ) {
         Node lEvaluatedNode;
         try {
-            lEvaluatedNode = ( Node ) this.mXPath.evaluate( pExpression,
-                    pDocument, XPathConstants.NODE );
+            lEvaluatedNode = ( Node ) this.mXPath.evaluate( pExpression, pDocument, XPathConstants.NODE );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
         }
@@ -183,8 +178,7 @@ public final class AhpXPathUtil {
     public NodeList getAsNodeList( Node pDocument, String pExpression ) {
         NodeList lEvaluatedNodeList;
         try {
-            lEvaluatedNodeList = ( NodeList ) this.mXPath.evaluate(
-                    pExpression, pDocument, XPathConstants.NODESET );
+            lEvaluatedNodeList = ( NodeList ) this.mXPath.evaluate( pExpression, pDocument, XPathConstants.NODESET );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
         }
@@ -203,8 +197,7 @@ public final class AhpXPathUtil {
     public Integer getAsInteger( Node pDocument, String pExpression ) {
         Integer lIntegerValue;
         try {
-            Double lDoubleValue = ( Double ) this.mXPath.evaluate( pExpression,
-                    pDocument, XPathConstants.NUMBER );
+            Double lDoubleValue = ( Double ) this.mXPath.evaluate( pExpression, pDocument, XPathConstants.NUMBER );
             lIntegerValue = new Integer( lDoubleValue.intValue() );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
@@ -224,8 +217,7 @@ public final class AhpXPathUtil {
     public Long getAsLong( Node pDocument, String pExpression ) {
         Long lLongValue;
         try {
-            Double lDoubleValue = ( Double ) this.mXPath.evaluate( pExpression,
-                    pDocument, XPathConstants.NUMBER );
+            Double lDoubleValue = ( Double ) this.mXPath.evaluate( pExpression, pDocument, XPathConstants.NUMBER );
             lLongValue = new Long( lDoubleValue.longValue() );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
@@ -262,8 +254,7 @@ public final class AhpXPathUtil {
     public String getAsString( Node pDocument, XPathExpression pXPathExpression ) {
         String lStringValue;
         try {
-            lStringValue = ( String ) pXPathExpression.evaluate( pDocument,
-                    XPathConstants.STRING );
+            lStringValue = ( String ) pXPathExpression.evaluate( pDocument, XPathConstants.STRING );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
         }
@@ -280,12 +271,10 @@ public final class AhpXPathUtil {
      *            the x path expression
      * @return the as boolean
      */
-    public Boolean getAsBoolean( Node pDocument,
-            XPathExpression pXPathExpression ) {
+    public Boolean getAsBoolean( Node pDocument, XPathExpression pXPathExpression ) {
         Boolean lBooleanValue;
         try {
-            lBooleanValue = ( Boolean ) pXPathExpression.evaluate( pDocument,
-                    XPathConstants.BOOLEAN );
+            lBooleanValue = ( Boolean ) pXPathExpression.evaluate( pDocument, XPathConstants.BOOLEAN );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
         }
@@ -305,8 +294,7 @@ public final class AhpXPathUtil {
     public Node getAsNode( Node pDocument, XPathExpression pXPathExpression ) {
         Node lEvaluatedNode;
         try {
-            lEvaluatedNode = ( Node ) pXPathExpression.evaluate( pDocument,
-                    XPathConstants.NODE );
+            lEvaluatedNode = ( Node ) pXPathExpression.evaluate( pDocument, XPathConstants.NODE );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
         }
@@ -322,12 +310,10 @@ public final class AhpXPathUtil {
      *            the x path expression
      * @return the as node list
      */
-    public NodeList getAsNodeList( Node pDocument,
-            XPathExpression pXPathExpression ) {
+    public NodeList getAsNodeList( Node pDocument, XPathExpression pXPathExpression ) {
         NodeList lEvaluatedNodeList;
         try {
-            lEvaluatedNodeList = ( NodeList ) pXPathExpression.evaluate(
-                    pDocument, XPathConstants.NODESET );
+            lEvaluatedNodeList = ( NodeList ) pXPathExpression.evaluate( pDocument, XPathConstants.NODESET );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
         }
@@ -343,12 +329,10 @@ public final class AhpXPathUtil {
      *            the x path expression
      * @return the as integer
      */
-    public Integer getAsInteger( Node pDocument,
-            XPathExpression pXPathExpression ) {
+    public Integer getAsInteger( Node pDocument, XPathExpression pXPathExpression ) {
         Integer lIntegerValue;
         try {
-            Double lDoubleValue = ( Double ) pXPathExpression.evaluate(
-                    pDocument, XPathConstants.NUMBER );
+            Double lDoubleValue = ( Double ) pXPathExpression.evaluate( pDocument, XPathConstants.NUMBER );
             lIntegerValue = new Integer( lDoubleValue.intValue() );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );
@@ -368,8 +352,7 @@ public final class AhpXPathUtil {
     public Long getAsLong( Node pDocument, XPathExpression pXPathExpression ) {
         Long lLongValue;
         try {
-            Double lDoubleValue = ( Double ) pXPathExpression.evaluate(
-                    pDocument, XPathConstants.NUMBER );
+            Double lDoubleValue = ( Double ) pXPathExpression.evaluate( pDocument, XPathConstants.NUMBER );
             lLongValue = new Long( lDoubleValue.longValue() );
         } catch ( XPathExpressionException exXPathExpression ) {
             throw new AhpRuntimeException( "" );

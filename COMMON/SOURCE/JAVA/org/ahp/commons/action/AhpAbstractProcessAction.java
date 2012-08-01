@@ -31,16 +31,17 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AhpAbstractProcessAction extends AhpAbstractAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpAbstractProcessAction.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpAbstractProcessAction.class );
 
     @Override
-    public ActionForward execute( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) throws Exception {
-
-        ActionForward lProcessActionForward = process( pActionMapping,
-                pActionForm, pHttpServletRequest, pHttpServletResponse );
+    public ActionForward execute( ActionMapping pActionMapping, 
+                                  ActionForm pActionForm,
+                                  HttpServletRequest pHttpServletRequest,
+                                  HttpServletResponse pHttpServletResponse ) throws Exception {
+        ActionForward lProcessActionForward = process( pActionMapping, 
+                                                       pActionForm,
+                                                       pHttpServletRequest,
+                                                       pHttpServletResponse );
         return lProcessActionForward;
     }
 
@@ -52,8 +53,9 @@ public abstract class AhpAbstractProcessAction extends AhpAbstractAction {
      * @param pHttpServletResponse
      * @return
      */
-    public abstract ActionForward process( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse );
+    public abstract ActionForward process( ActionMapping pActionMapping, 
+                                           ActionForm pActionForm,
+                                           HttpServletRequest pHttpServletRequest, 
+                                           HttpServletResponse pHttpServletResponse );
 
 }

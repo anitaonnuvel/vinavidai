@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ahp.commons.action.AhpAbstractDisplayAction;
-import org.ahp.commons.util.AhpStringUtil;
 import org.ahp.core.actions.AhpActionHelper;
 import org.ahp.core.pojo.User;
 import org.ahp.vinavidai.enums.NavigateActions;
@@ -59,8 +58,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DisplayCreateQuiz extends AhpAbstractDisplayAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( DisplayCreateQuiz.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( DisplayCreateQuiz.class );
 
     private QuizService mQuizService;
 
@@ -69,17 +67,13 @@ public class DisplayCreateQuiz extends AhpAbstractDisplayAction {
     }
 
     @Override
-    public ActionForward display( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
+    public ActionForward display( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
         LOGGER.trace( "DisplayCreateQuiz :: starts" );
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         CreateQuizForm lCreateQuizForm = ( CreateQuizForm ) pActionForm;
-        String lNextPage = StringUtils.trimToEmpty( lCreateQuizForm
-                .getNextPage() );
-        ActionForward lActionForward = pActionMapping
-                .findForward( NavigateActions.DisplayCreateQuiz.toString() );
+        String lNextPage = StringUtils.trimToEmpty( lCreateQuizForm.getNextPage() );
+        ActionForward lActionForward = pActionMapping.findForward( NavigateActions.DisplayCreateQuiz.toString() );
         if ( lCreateQuizForm.isSubmitAction( SubmitActions.ADD_CATEGORY ) ) {
             Category lCategory = new Category();
             lCategory.setCategory( "" );
@@ -87,8 +81,7 @@ public class DisplayCreateQuiz extends AhpAbstractDisplayAction {
             return lActionForward;
         }
         if ( lCreateQuizForm.isSubmitAction( SubmitActions.DELETE_CATEGORY ) ) {
-            int lDeleteCategoryIndex = lCreateQuizForm
-                    .getHiddenDeleteCategoryIndex();
+            int lDeleteCategoryIndex = lCreateQuizForm.getHiddenDeleteCategoryIndex();
             lCreateQuizForm.getCategory().remove( lDeleteCategoryIndex );
             return lActionForward;
         }
@@ -99,38 +92,28 @@ public class DisplayCreateQuiz extends AhpAbstractDisplayAction {
             return lActionForward;
         }
         if ( lCreateQuizForm.isSubmitAction( SubmitActions.DELETE_SKILL_LEVEL ) ) {
-            int lDeleteSkillLevelIndex = lCreateQuizForm
-                    .getHiddenDeleteSkillLevelIndex();
+            int lDeleteSkillLevelIndex = lCreateQuizForm.getHiddenDeleteSkillLevelIndex();
             lCreateQuizForm.getSkillLevel().remove( lDeleteSkillLevelIndex );
             return lActionForward;
         }
         if ( NavigateActions.DisplayCreateQuiz.toString().equals( lNextPage ) ) {
-            lCreateQuizForm.setCategoriesAutoComplete( AhpStringUtil
-                    .listToQuotedString( this.mQuizService
-                            .getAllCategoryNames( lLoggedInUser ) ) );
-            lCreateQuizForm.setSkillLevelsAutoComplete( AhpStringUtil
-                    .listToQuotedString( this.mQuizService
-                            .getAllSkillLevelNames( lLoggedInUser ) ) );
+            //lCreateQuizForm.setCategoriesAutoComplete( AhpStringUtil.listToQuotedString( this.mQuizService
+            //        .getAllCategoryNames( lLoggedInUser ) ) );
+            //lCreateQuizForm.setSkillLevelsAutoComplete( AhpStringUtil.listToQuotedString( this.mQuizService
+            //        .getAllSkillLevelNames( lLoggedInUser ) ) );
             List<Category> lCategoryList = new ArrayList<Category>();
             lCategoryList.add( new Category() );
             lCreateQuizForm.setCategory( lCategoryList );
             List<SkillLevel> lSkillLevelList = new ArrayList<SkillLevel>();
             lSkillLevelList.add( new SkillLevel() );
             lCreateQuizForm.setSkillLevel( lSkillLevelList );
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayCreateQuiz.toString() );
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayCreateQuiz.toString() );
         }
-        if ( NavigateActions.DisplayCreateQuestion.toString()
-                .equals( lNextPage ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayCreateQuestion
-                            .toString() );
+        if ( NavigateActions.DisplayCreateQuestion.toString().equals( lNextPage ) ) {
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayCreateQuestion.toString() );
         }
-        if ( NavigateActions.DisplayCreateQuizConfirmation.toString().equals(
-                lNextPage ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayCreateQuizConfirmation
-                            .toString() );
+        if ( NavigateActions.DisplayCreateQuizConfirmation.toString().equals( lNextPage ) ) {
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayCreateQuizConfirmation.toString() );
         }
         LOGGER.trace( "DisplayCreateQuiz :: ends" );
         return lActionForward;

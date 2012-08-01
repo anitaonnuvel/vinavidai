@@ -32,21 +32,28 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * @author Anita Onnuvel
  * 
- * @struts.action path="/ProcessLogin" name="LoginForm" input="/login/Login.jsp"
- *                scope="session" validate="true"
+ * @struts.action 
+ *     path="/ProcessLogin" 
+ *     name="LoginForm" 
+ *     input="/login/Login.jsp"
+ *     scope="session" 
+ *     validate="true"
  * 
- * @struts.action-forward name="DisplayLogin" path="/DisplayLogin.do"
- *                        redirect="false"
+ * @struts.action-forward 
+ *     name="DisplayLogin" 
+ *     path="/DisplayLogin.do"
+ *     redirect="false"
  * 
- * @spring.bean name="/ProcessLogin"
+ * @spring.bean 
+ *     name="/ProcessLogin"
  * 
- * @spring.property name="loginService" ref="loginService"
+ * @spring.property 
+ *     name="loginService" 
+ *     ref="loginService"
  * 
  */
 public class ProcessLogin extends AhpAbstractProcessAction {
@@ -60,34 +67,27 @@ public class ProcessLogin extends AhpAbstractProcessAction {
     }
 
     @Override
-    public ActionForward process( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
+    public ActionForward process( ActionMapping pActionMapping, 
+                                  ActionForm pActionForm,
+                                  HttpServletRequest pHttpServletRequest, 
+                                  HttpServletResponse pHttpServletResponse ) {
         LoginForm lLoginForm = ( LoginForm ) pActionForm;
-        String lSubmitAction = StringUtils.trimToNull( lLoginForm
-                .getSubmitAction() );
-        WebApplicationContext lWebApplicationContext = WebApplicationContextUtils
-                .getWebApplicationContext( super.getServlet()
-                        .getServletContext() );
+        String lSubmitAction = StringUtils.trimToNull( lLoginForm.getSubmitAction() );
         if ( lSubmitAction != null ) {
             if ( SubmitActions.LOGIN.toString().equals( lSubmitAction ) ) {
                 String lLoginName = lLoginForm.getLoginName();
                 String lPassword = lLoginForm.getPassword();
-                boolean lAuthenticated = mLoginService.isUserAuthenticated(
-                        lLoginName, lPassword );
+                boolean lAuthenticated = mLoginService.isUserAuthenticated( lLoginName, lPassword );
                 if ( lAuthenticated ) {
                     LOGGER.debug( "Login Successful" );
                     User lUser = mLoginService.loadUserByLoginName( lLoginName );
-                    pHttpServletRequest.getSession().setAttribute(
-                            LOGGED_IN_USER, lUser );
+                    pHttpServletRequest.getSession().setAttribute( LOGGED_IN_USER, lUser );
                     lLoginForm.setNextPage( "DisplayHomePage" );
                 }
-                lLoginForm.setNextPage( NavigateActions.DisplayHomePage
-                        .toString() );
+                lLoginForm.setNextPage( NavigateActions.DisplayHomePage.toString() );
             }
         }
-        return pActionMapping.findForward( NavigateActions.DisplayLogin
-                .toString() );
+        return pActionMapping.findForward( NavigateActions.DisplayLogin.toString() );
     }
 
 }

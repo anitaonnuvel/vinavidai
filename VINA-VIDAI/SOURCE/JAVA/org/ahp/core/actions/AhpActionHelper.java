@@ -30,8 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class AhpActionHelper {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpActionHelper.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpActionHelper.class );
 
     /**
      * 
@@ -39,8 +38,7 @@ public final class AhpActionHelper {
      * @return
      */
     public static User getLoggedInUser( HttpServletRequest pHttpServletRequest ) {
-        return ( User ) pHttpServletRequest.getSession().getAttribute(
-                LOGGED_IN_USER );
+        return ( User ) pHttpServletRequest.getSession().getAttribute( LOGGED_IN_USER );
     }
 
 }

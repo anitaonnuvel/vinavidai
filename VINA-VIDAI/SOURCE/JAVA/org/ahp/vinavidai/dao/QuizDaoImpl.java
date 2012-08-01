@@ -47,12 +47,12 @@ public class QuizDaoImpl implements IQuizDao {
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager mEntityManager;
 
-    final String GET_ALL_CATEGORIES_BY_USER = " select category.category from vinavidai.category, vinavidai.quiz, vinavidai.user "
+    final String GET_ALL_CATEGORIES_BY_USER = " select category.category from category, quiz, user "
             + " where user.login_name = ? "
             + " and quiz.user_user_id = user.user_id "
             + " and category.quiz_id = quiz.quiz_id ";
 
-    final String GET_ALL_SKILL_LEVELS_BY_USER = " select skill_level.skill_level from vinavidai.skill_level, vinavidai.quiz, vinavidai.user "
+    final String GET_ALL_SKILL_LEVELS_BY_USER = " select skill_level.skill_level from skill_level, quiz, user "
             + " where user.login_name = ? "
             + " and quiz.user_user_id = user.user_id "
             + " and skill_level.quiz_id = quiz.quiz_id ";

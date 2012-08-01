@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AhpBusinessDelegate extends AhpAbstractBusinessDelegate {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpBusinessDelegate.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpBusinessDelegate.class );
 
     protected User mUser = null;
 
@@ -54,8 +53,7 @@ public abstract class AhpBusinessDelegate extends AhpAbstractBusinessDelegate {
      * @return
      */
     public static Audit createAudit( User pUser ) {
-        java.util.Date lTodayDate = new java.sql.Timestamp(
-                System.currentTimeMillis() );
+        java.util.Date lTodayDate = new java.sql.Timestamp( System.currentTimeMillis() );
         Audit lAudit = new Audit();
         lAudit.setCreatedBy( pUser.getUserId() );
         lAudit.setCreatedDate( lTodayDate );

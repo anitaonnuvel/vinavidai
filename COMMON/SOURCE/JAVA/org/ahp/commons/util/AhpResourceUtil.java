@@ -46,8 +46,7 @@ public final class AhpResourceUtil {
      * @return
      */
     public static boolean isClassPathResource( String pResourceUri ) {
-        if ( pResourceUri.trim().toUpperCase()
-                .startsWith( CLASSPATH_RESOURCE_PREFIX.toUpperCase() ) ) {
+        if ( pResourceUri.trim().toUpperCase().startsWith( CLASSPATH_RESOURCE_PREFIX.toUpperCase() ) ) {
             return true;
         }
         return false;
@@ -59,10 +58,8 @@ public final class AhpResourceUtil {
      * @return
      */
     public static boolean isFileResource( String pResourceUri ) {
-        if ( pResourceUri.trim().toUpperCase()
-                .startsWith( FILE_RESOURCE_PREFIX.toUpperCase() )
-                || pResourceUri.trim().toUpperCase()
-                        .startsWith( FILE_RESOURCE_URI_PREFIX.toUpperCase() ) ) {
+        if ( pResourceUri.trim().toUpperCase().startsWith( FILE_RESOURCE_PREFIX.toUpperCase() )
+                || pResourceUri.trim().toUpperCase().startsWith( FILE_RESOURCE_URI_PREFIX.toUpperCase() ) ) {
             return true;
         }
         return false;
@@ -74,8 +71,7 @@ public final class AhpResourceUtil {
      * @return
      */
     public static boolean isWebInfResource( String pResourceUri ) {
-        if ( pResourceUri.trim().toUpperCase()
-                .startsWith( WEB_INF_RESOURCE_PREFIX.toUpperCase() ) ) {
+        if ( pResourceUri.trim().toUpperCase().startsWith( WEB_INF_RESOURCE_PREFIX.toUpperCase() ) ) {
             return true;
         }
         return false;
@@ -88,8 +84,7 @@ public final class AhpResourceUtil {
      */
     public static String getClassPathResourcePath( String pResourceUri ) {
         if ( isClassPathResource( pResourceUri ) ) {
-            return StringUtils.substringAfter( pResourceUri,
-                    CLASSPATH_RESOURCE_PREFIX );
+            return StringUtils.substringAfter( pResourceUri, CLASSPATH_RESOURCE_PREFIX );
         }
         return null;
     }
@@ -101,17 +96,14 @@ public final class AhpResourceUtil {
      */
     public static String getFileResourcePath( String pResourceUri ) {
         if ( isFileResource( pResourceUri ) ) {
-            return StringUtils.substringAfter( pResourceUri.trim(),
-                    FILE_RESOURCE_PREFIX );
+            return StringUtils.substringAfter( pResourceUri.trim(), FILE_RESOURCE_PREFIX );
         }
         return null;
     }
 
     public static InputStream getClassPathResource( String pResourceUri ) {
         if ( isClassPathResource( pResourceUri ) ) {
-            return AhpResourceUtil.class
-                    .getResourceAsStream( getClassPathResourcePath( pResourceUri
-                            .trim() ) );
+            return AhpResourceUtil.class.getResourceAsStream( getClassPathResourcePath( pResourceUri.trim() ) );
         }
         throw new AhpRuntimeException( "AHP.110.001" );
     }
@@ -124,8 +116,7 @@ public final class AhpResourceUtil {
     public static InputStream getFileResource( String pResourceUri ) {
         if ( isFileResource( pResourceUri ) ) {
             try {
-                return new FileInputStream( new File( new URI(
-                        pResourceUri.trim() ) ) );
+                return new FileInputStream( new File( new URI( pResourceUri.trim() ) ) );
             } catch ( FileNotFoundException exFileNotFound ) {
                 new AhpRuntimeException( "AHP.110.001", exFileNotFound );
             } catch ( URISyntaxException exURISyntax ) {
@@ -140,14 +131,11 @@ public final class AhpResourceUtil {
      * @param pClasspathResourceUri
      * @return
      */
-    public static URL getClassPathResourceAsFileUrl(
-            String pClasspathResourceUri ) {
+    public static URL getClassPathResourceAsFileUrl( String pClasspathResourceUri ) {
         if ( isClassPathResource( pClasspathResourceUri ) ) {
-            pClasspathResourceUri = StringUtils.substringAfter(
-                    pClasspathResourceUri, CLASSPATH_RESOURCE_PREFIX + "/" );
+            pClasspathResourceUri = StringUtils.substringAfter( pClasspathResourceUri, CLASSPATH_RESOURCE_PREFIX + "/" );
             System.out.println( pClasspathResourceUri );
-            return Thread.currentThread().getContextClassLoader()
-                    .getResource( pClasspathResourceUri );
+            return Thread.currentThread().getContextClassLoader().getResource( pClasspathResourceUri );
         }
         throw new AhpRuntimeException( "AHP.110.0001" );
     }
@@ -157,10 +145,8 @@ public final class AhpResourceUtil {
      * @param pClasspathResourceUri
      * @return
      */
-    public static String getClassPathResourceAsFileResource(
-            String pClasspathResourceUri ) {
-        return getClassPathResourceAsFileUrl( pClasspathResourceUri )
-                .toString();
+    public static String getClassPathResourceAsFileResource( String pClasspathResourceUri ) {
+        return getClassPathResourceAsFileUrl( pClasspathResourceUri ).toString();
     }
 
     /**
@@ -169,8 +155,7 @@ public final class AhpResourceUtil {
      * @param pResourceUri
      * @return
      */
-    public static String getWebInfResourceAsFileResourceUri(
-            String pResourceUri, String pRealPath ) {
+    public static String getWebInfResourceAsFileResourceUri( String pResourceUri, String pRealPath ) {
         Path lFilePath = Paths.get( pRealPath + pResourceUri );
         return lFilePath.toUri().toString();
     }

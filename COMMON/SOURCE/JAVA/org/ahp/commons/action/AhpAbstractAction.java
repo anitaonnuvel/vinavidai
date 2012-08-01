@@ -24,13 +24,12 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Anita Onnuvel
  * 
- *         The Class AhpAbstractAction.
+ *
  */
 public abstract class AhpAbstractAction extends Action {
 
     /** The Constant LOGGER. */
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpAbstractAction.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpAbstractAction.class );
 
     /** The Constant PREVIOUS_ACTION. */
     public static final String PREVIOUS_ACTION = "Previous";

@@ -31,12 +31,19 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Anita Onnuvel
  * 
- * @struts.action path="/DisplayLogin" name="LoginForm" scope="session"
- *                validate="false"
+ * @struts.action 
+ *     path="/DisplayLogin" 
+ *     name="LoginForm" 
+ *     scope="session"
+ *     validate="false"
  * 
- * @struts.action-forward name="DisplayLogin" path="/login/Login.jsp"
+ * @struts.action-forward 
+ *     name="DisplayLogin" 
+ *     path="/login/Login.jsp"
  * 
- * @struts.action-forward name="DisplayHomePage" path="/login/Home.jsp"
+ * @struts.action-forward 
+ *     name="DisplayHomePage" 
+ *     path="/login/Home.jsp"
  * 
  */
 public class DisplayLogin extends AhpAbstractDisplayAction {
@@ -44,16 +51,14 @@ public class DisplayLogin extends AhpAbstractDisplayAction {
     final static Logger LOGGER = LoggerFactory.getLogger( DisplayLogin.class );
 
     @Override
-    public ActionForward display( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
+    public ActionForward display( ActionMapping pActionMapping, 
+                                  ActionForm pActionForm,
+                                  HttpServletRequest pHttpServletRequest,
+                                  HttpServletResponse pHttpServletResponse ) {
         LoginForm lLoginForm = ( LoginForm ) pActionForm;
-        if ( NavigateActions.DisplayHomePage.toString().equals(
-                StringUtils.trimToEmpty( lLoginForm.getNextPage() ) ) ) {
-            return pActionMapping.findForward( NavigateActions.DisplayHomePage
-                    .toString() );
+        if ( NavigateActions.DisplayHomePage.toString().equals( StringUtils.trimToEmpty( lLoginForm.getNextPage() ) ) ) {
+            return pActionMapping.findForward( NavigateActions.DisplayHomePage.toString() );
         }
-        return pActionMapping.findForward( NavigateActions.DisplayLogin
-                .toString() );
+        return pActionMapping.findForward( NavigateActions.DisplayLogin.toString() );
     }
 }

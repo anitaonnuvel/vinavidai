@@ -26,7 +26,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.ahp.core.pojo.User;
 import org.slf4j.Logger;
@@ -48,32 +47,30 @@ public class LoginFilter implements Filter {
     }
 
     @Override
-    public void doFilter( ServletRequest request, ServletResponse response,
-            FilterChain filterChain ) throws IOException, ServletException {
+    public void doFilter( ServletRequest pServletRequest, 
+                          ServletResponse pServletResponse, 
+                          FilterChain pFilterChain )
+            throws IOException, ServletException {
         LOGGER.trace( "doFilter start" );
-        HttpServletRequest req = ( HttpServletRequest ) request;
-        HttpServletResponse res = ( HttpServletResponse ) response;
-        req.getRequestURI();
-        if ( !req.getRequestURI().equals( "/vinavidai/ProcessLogin.do" ) ) {
-            if ( req.getSession() != null ) {
-                User user = ( User ) req.getSession().getAttribute(
-                        LOGGED_IN_USER );
-                if ( user == null ) {
-                    LOGGER.trace( "user object null" );
-                    // res.sendRedirect( "ProcessLogin.do" );
-                    req.getRequestDispatcher( "/ProcessLogin.do" ).forward(
-                            request, response );
+        HttpServletRequest lHttpServletRequest = ( HttpServletRequest ) pServletRequest;
+        lHttpServletRequest.getRequestURI();
+        if ( !lHttpServletRequest.getRequestURI().endsWith( "ProcessLogin.do" ) ) {
+            if ( lHttpServletRequest.getSession() != null ) {
+                User lLoggedInUser = ( User ) lHttpServletRequest.getSession().getAttribute( LOGGED_IN_USER );
+                if ( lLoggedInUser == null ) {
+                    LOGGER.trace( "User object null" );
+                    lHttpServletRequest.getRequestDispatcher( "/ProcessLogin.do" ).forward( pServletRequest, pServletResponse );
                     return;
                 }
             }
         }
-        LOGGER.trace( "doFilter end1" );
-        filterChain.doFilter( request, response );
-        LOGGER.trace( "doFilter end2" );
+        LOGGER.trace( "LoginFilter :: doFilter end1" );
+        pFilterChain.doFilter( pServletRequest, pServletResponse );
+        LOGGER.trace( "LoginFilter :: doFilter end2" );
     }
 
     @Override
-    public void init( FilterConfig pArg0 ) throws ServletException {
+    public void init( FilterConfig pFilterConfig ) throws ServletException {
         LOGGER.trace( "Login Filter initialized" );
 
     }

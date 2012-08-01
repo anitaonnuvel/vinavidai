@@ -45,35 +45,27 @@ import org.slf4j.LoggerFactory;
  */
 public class DisplayDeleteQuiz extends AhpAbstractDisplayAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( DisplayDeleteQuiz.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( DisplayDeleteQuiz.class );
 
     @Override
-    public ActionForward display( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward display( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         ManageQuizForm lManageQuizForm = ( ManageQuizForm ) pActionForm;
         lManageQuizForm.setDeleteQuiz( true );
-        String lNextPage = StringUtils.trimToEmpty( lManageQuizForm
-                .getNextPage() );
-        ActionForward lActionForward = pActionMapping
-                .findForward( NavigateActions.DisplayDeleteQuiz.toString() );
+        String lNextPage = StringUtils.trimToEmpty( lManageQuizForm.getNextPage() );
+        ActionForward lActionForward = pActionMapping.findForward( NavigateActions.DisplayDeleteQuiz.toString() );
         if ( NavigateActions.DisplayManageQuiz.toString().equals( lNextPage ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayManageQuiz.toString() );
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayManageQuiz.toString() );
         }
         if ( NavigateActions.DisplayDeleteQuiz.toString().equals( lNextPage ) ) {
             for ( Quiz lViewQuiz : lManageQuizForm.getQuizResults() ) {
-                if ( lViewQuiz.getQuizId().longValue() == ( lManageQuizForm
-                        .getSelectedQuizId().longValue() ) ) {
+                if ( lViewQuiz.getQuizId().longValue() == ( lManageQuizForm.getSelectedQuizId().longValue() ) ) {
                     lManageQuizForm.setSelectedQuiz( lViewQuiz );
                     break;
                 }
             }
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayDeleteQuiz.toString() );
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayDeleteQuiz.toString() );
         }
         return lActionForward;
     }

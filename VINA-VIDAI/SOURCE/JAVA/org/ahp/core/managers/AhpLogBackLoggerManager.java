@@ -33,12 +33,12 @@ import ch.qos.logback.core.util.StatusPrinter;
  * 
  * @author Anita Onnuvel
  * 
- * @spring.bean id="ahpLoggerManager"
+ * @spring.bean 
+ *     id="ahpLoggerManager"
  */
 public final class AhpLogBackLoggerManager implements IAhpLoggerManager {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpLogBackLoggerManager.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpLogBackLoggerManager.class );
 
     @Override
     public void destroy() {
@@ -71,14 +71,13 @@ public final class AhpLogBackLoggerManager implements IAhpLoggerManager {
         } else if ( AhpResourceUtil.isFileResource( lResourceUri ) ) {
             lInputStream = AhpResourceUtil.getFileResource( lResourceUri );
         } else if ( AhpResourceUtil.isWebInfResource( lResourceUri ) ) {
-            lResourceUri = AhpResourceUtil.getWebInfResourceAsFileResourceUri(
-                    lResourceUri, pAhpDeployment.getRealPath() );
+            lResourceUri = AhpResourceUtil.getWebInfResourceAsFileResourceUri( lResourceUri,
+                    pAhpDeployment.getRealPath() );
             lInputStream = AhpResourceUtil.getFileResource( lResourceUri );
         } else {
             throw new AhpRuntimeException( "AHP" );
         }
-        LoggerContext lLoggerContext = ( LoggerContext ) LoggerFactory
-                .getILoggerFactory();
+        LoggerContext lLoggerContext = ( LoggerContext ) LoggerFactory.getILoggerFactory();
         try {
             JoranConfigurator lJoranConfigurator = new JoranConfigurator();
             lJoranConfigurator.setContext( lLoggerContext );

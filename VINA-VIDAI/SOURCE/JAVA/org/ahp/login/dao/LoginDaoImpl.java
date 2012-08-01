@@ -27,7 +27,8 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Anita Onnuvel
  * 
- * @spring.bean id="loginDao"
+ * @spring.bean 
+ *     id="loginDao"
  * 
  */
 public class LoginDaoImpl implements ILoginDao {
@@ -47,9 +48,8 @@ public class LoginDaoImpl implements ILoginDao {
      * @return
      */
     public User loadUserByLoginName( String pLoginName ) {
-        return ( User ) mEntityManager.createQuery(
-                "SELECT user FROM User user WHERE LOWER(user.loginName) like LOWER('%"
-                        + pLoginName + "%')" ).getSingleResult();
+        return ( User ) mEntityManager.
+                createQuery( "SELECT user FROM User user WHERE LOWER(user.loginName) like LOWER('%" + pLoginName + "%')" ).getSingleResult();
     }
 
     /**

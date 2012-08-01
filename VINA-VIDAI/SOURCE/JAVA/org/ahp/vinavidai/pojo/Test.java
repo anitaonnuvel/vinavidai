@@ -43,7 +43,8 @@ import org.ahp.vinavidai.enums.Status;
  * 
  */
 @Entity
-@Table(name = "TEST", schema = "VINAVIDAI")
+//@Table(name = "TEST", schema = "VINAVIDAI")
+@Table(name = "TEST")
 public class Test extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

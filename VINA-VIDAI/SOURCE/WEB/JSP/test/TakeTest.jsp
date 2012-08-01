@@ -21,42 +21,58 @@
         <%@ include file="/common/JQueryUi.jsp" %>
         <%@ include file="/common/JQueryUiDateTimePicker.jsp" %>
         <title>VinaVidai - TakeTest</title>
-        <script type="text/javascript">
-        </script>
     </head>
     <body>
         <%@ include file="/common/Header.jsp" %>
         <div id="rootContainer">            
             <div id="bodyContent">
-                <h3>Take Test</h3>               
-                <html:errors bundle="vinavidai"/>
-                <html:form action="${form.processAction}" method="post">
+                <h3>${takeTest.test.testDescription}</h3>               
+                <form:errors path="*" cssClass="ahpError" element="div"/>
+                <form:form method="post" commandName="takeTest">                    
                     <table id="ahpFormTable">
                         <tr>
-                            <td>
-                                Test Name*
+                            <td align="left">
+                                Question : <b><c:out value="${takeTest.currentQuestionNumber}"/> of  <c:out value="${takeTest.totalQuestions}"/></b>
                             </td>
-                            <td>
-                                <html:text name="${form.formName}"
-                                    property="takeTest.testName"
-                                    styleId="testName"/>
+                            <td align="left">
+                                Question Category : <b><c:out value="${takeTest.currentQuestion.category.category}"/>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Quiz Description*
+                            <td align="left">
+                                Question SkillLevel : <b><c:out value="${takeTest.currentQuestion.skillLevel.skillLevel}"/>
                             </td>
-                            <td>
-                                <html:textarea name="${form.formName}"
-                                    property="takeTest.testDescription"
-                                    styleId="testDescription"/>                       
+                            <td align="left">
+                                Time : <b><c:out value="${takeTest.currentQuestion.questionDuration}"/>
                             </td>
                         </tr>
                     </table>
+                    <br/>
+                    <br/>
+                    <table id="ahpFormTable">
+                        <tr>
+                            <td align="left">
+                                <c:out value="${takeTest.currentQuestion.questionDescription}"/>
+                            </td>
+                        </tr>
+                        <c:if test="${takeTest.currentQuestion.questionType eq 'MultipleChoice'}">
+                        <tr>    
+                            <td align="left">
+                                Please select options below
+                            </td>
+                        </tr>
+                        <tr>    
+                            <td align="left">
+                                <form:checkboxes delimiter="<br/>" items="${takeTest.currentQuestion.options}" itemLabel="optionDescription" path=""/>
+                            </td>
+                        </tr>
+                        </c:if>
+                    </table>                    
                     <div id="formSubmit">
-                        <html:submit property="submitAction" value="Begin Test" styleClass="submitButton"/>
+                        <input type="submit" value="Pause Test" name="submitAction"/>
+                        <input type="submit" value="Cancel Test" name="submitAction"/>
+                        <input type="submit" value="Next Question" name="submitAction"/>
+                        <input type="submit" value="Complete Test" name="submitAction"/>                        
                     </div>
-                </html:form>
+                </form:form>
             </div>
         </div>
         <%@ include file="/common/Footer.jsp" %>

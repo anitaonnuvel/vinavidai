@@ -37,7 +37,8 @@ import org.ahp.vinavidai.enums.Status;
  * 
  */
 @Entity
-@Table(name = "QUIZ_GROUP", schema = "VINAVIDAI")
+//@Table(name = "QUIZ_GROUP", schema = "VINAVIDAI")
+@Table(name = "QUIZ_GROUP")
 public class QuizGroup extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -30,4 +30,5 @@ public class BaseValidator extends AbstractValidator {
     public static final String EDIT_QUESTION_ERROR_KEY_PREFIX = "edit.question";
     public static final String MANAGE_QUIZ_ERROR_KEY_PREFIX = "manage.quiz";
     public static final String PUBLISH_QUIZ_ERROR_KEY_PREFIX = "publish.quiz";
+    public static final String REGISTRATION_USER_ERROR_KEY_PREFIX = "registration.user";
 }

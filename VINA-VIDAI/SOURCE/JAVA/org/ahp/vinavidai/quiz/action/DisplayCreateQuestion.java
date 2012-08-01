@@ -60,8 +60,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DisplayCreateQuestion extends AhpAbstractDisplayAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( ProcessCreateQuestion.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( ProcessCreateQuestion.class );
 
     private QuizService mQuizService;
 
@@ -70,37 +69,29 @@ public class DisplayCreateQuestion extends AhpAbstractDisplayAction {
     }
 
     @Override
-    public ActionForward display( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward display( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         CreateQuestionForm lCreateQuestionForm = ( CreateQuestionForm ) pActionForm;
-        String lNextPage = StringUtils.trimToEmpty( lCreateQuestionForm
-                .getNextPage() );
-        ActionForward lActionForward = pActionMapping
-                .findForward( NavigateActions.DisplayCreateQuestion.toString() );
-        if ( NavigateActions.DisplayCreateQuestion.toString()
-                .equals( lNextPage )
-                || NavigateActions.DisplayCreateQuestionStart.toString()
-                        .equals( lNextPage )
-                || NavigateActions.DisplayCreateQuestionNext.toString().equals(
-                        lNextPage ) ) {
-            if ( NavigateActions.DisplayCreateQuestionStart.toString().equals(
-                    lNextPage ) ) {
+        String lNextPage = StringUtils.trimToEmpty( lCreateQuestionForm.getNextPage() );
+        ActionForward lActionForward = pActionMapping.findForward( NavigateActions.DisplayCreateQuestion.toString() );
+        if ( NavigateActions.DisplayCreateQuestion.toString().equals( lNextPage )
+                || NavigateActions.DisplayCreateQuestionStart.toString().equals( lNextPage )
+                || NavigateActions.DisplayCreateQuestionNext.toString().equals( lNextPage ) ) {
+            if ( NavigateActions.DisplayCreateQuestionStart.toString().equals( lNextPage ) ) {
                 this.setDefaultValues( lCreateQuestionForm );
-                pHttpServletRequest.getSession().removeAttribute(
-                        QUIZ_UNDER_CREATION );
+                pHttpServletRequest.getSession().removeAttribute( QUIZ_UNDER_CREATION );
+            }
+            if ( NavigateActions.DisplayCreateQuestionNext.toString().equals( lNextPage ) ) {
+                this.setDefaultValues( lCreateQuestionForm );
             }
             if ( lCreateQuestionForm.isSubmitAction( SubmitActions.ADD_OPTION ) ) {
                 Option lOption = new Option();
                 lOption.setOptionDescription( "" );
                 lCreateQuestionForm.getOptions().add( lOption );
             }
-            if ( lCreateQuestionForm
-                    .isSubmitAction( SubmitActions.DELETE_OPTION ) ) {
-                int lDeleteIndex = Integer.parseInt( lCreateQuestionForm
-                        .getHiddenDeleteOptionIndex() );
+            if ( lCreateQuestionForm.isSubmitAction( SubmitActions.DELETE_OPTION ) ) {
+                int lDeleteIndex = Integer.parseInt( lCreateQuestionForm.getHiddenDeleteOptionIndex() );
                 if ( lCreateQuestionForm.getOptions().size() > lDeleteIndex )
                     lCreateQuestionForm.getOptions().remove( lDeleteIndex );
                 while ( lCreateQuestionForm.getOptions().size() < 3 ) {
@@ -113,16 +104,11 @@ public class DisplayCreateQuestion extends AhpAbstractDisplayAction {
                 this.setDefaultValues( lCreateQuestionForm );
             }
         }
-        if ( NavigateActions.DisplayCreateQuizConfirmation.toString().equals(
-                lNextPage ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayCreateQuestionConfirmation
-                            .toString() );
+        if ( NavigateActions.DisplayCreateQuizConfirmation.toString().equals( lNextPage ) ) {
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayCreateQuestionConfirmation.toString() );
         }
-        if ( NavigateActions.DisplayCreateQuizCancelled.toString().equals(
-                lNextPage ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayQuizConsole.toString() );
+        if ( NavigateActions.DisplayCreateQuizCancelled.toString().equals( lNextPage ) ) {
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayQuizConsole.toString() );
         }
         return lActionForward;
     }

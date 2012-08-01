@@ -34,7 +34,8 @@ import org.ahp.core.pojo.BaseEntity;
  * 
  */
 @Entity
-@Table(name = "CATEGORY", schema = "VINAVIDAI")
+@Table(name = "CATEGORY" )
+//@Table(name = "CATEGORY", schema = "VINAVIDAI")
 public class Category extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -82,8 +82,9 @@ public class AhpMessageDigest {
      * @return
      * @throws Exception
      */
-    public static String createDigest( String pClearText, boolean pUseSalt,
-            int pIterationCount ) throws Exception {
+    public static String createDigest( String pClearText, 
+                                       boolean pUseSalt, 
+                                       int pIterationCount ) throws Exception {
         return createDigest( pClearText, 100 );
     }
 

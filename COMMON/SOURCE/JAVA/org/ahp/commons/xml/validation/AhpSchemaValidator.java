@@ -40,8 +40,7 @@ import org.xml.sax.SAXException;
 public class AhpSchemaValidator {
 
     /** The Constant LOGGER. */
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpSchemaValidator.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpSchemaValidator.class );
 
     /** The Constant W3C_SCHEMA. */
     public static final String W3C_SCHEMA = "http://www.w3.org/2001/XMLSchema";
@@ -131,10 +130,8 @@ public class AhpSchemaValidator {
      */
     public boolean validateWithW3CSchema() {
         try {
-            SchemaFactory lSchemaFactory = SchemaFactory
-                    .newInstance( W3C_SCHEMA );
-            Schema lSchema = lSchemaFactory.newSchema( new File(
-                    this.mSchemaLocation ) );
+            SchemaFactory lSchemaFactory = SchemaFactory.newInstance( W3C_SCHEMA );
+            Schema lSchema = lSchemaFactory.newSchema( new File( this.mSchemaLocation ) );
             Validator lValidator = lSchema.newValidator();
             Source lSource = null;
             if ( this.mXmlFile != null ) {
@@ -159,10 +156,8 @@ public class AhpSchemaValidator {
             lValidator.setErrorHandler( lErrorHandler );
             lValidator.validate( lSource );
             return true;
-        } catch ( SAXException exSAX ) {
-            LOGGER.error( "ValidationFailed", exSAX );
-        } catch ( IOException exIO ) {
-            LOGGER.error( "ValidationFailed", exIO );
+        } catch ( SAXException | IOException ex ) {
+            LOGGER.error( "ValidationFailed", ex );
         }
         return false;
     }

@@ -16,8 +16,6 @@
 package org.ahp.commons.validator;
 
 import static org.ahp.commons.validator.ValidatorConstants.EMAIL_ADDRESS_ALLOWED_REGEX;
-import static org.ahp.commons.validator.ValidatorConstants.EMAIL_ADDRESS_MAX_LENGTH;
-import static org.ahp.commons.validator.ValidatorConstants.EMAIL_ADDRESS_MIN_LENGTH;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -25,6 +23,7 @@ import java.util.Set;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.springframework.validation.Errors;
 
 /**
  * 
@@ -42,12 +41,10 @@ public abstract class AbstractValidator {
      *            type Set<String>
      */
     @SafeVarargs
-    public static void populateActionErrors( ActionErrors pActionErrors,
-            Set<String>... pErrorKeySet ) {
+    public static void populateActionErrors( ActionErrors pActionErrors, Set<String>... pErrorKeySet ) {
         for ( Set<String> lErrorKeySet : pErrorKeySet ) {
             for ( String lErrorKey : lErrorKeySet ) {
-                pActionErrors.add( ActionMessages.GLOBAL_MESSAGE,
-                        new ActionMessage( lErrorKey ) );
+                pActionErrors.add( ActionMessages.GLOBAL_MESSAGE, new ActionMessage( lErrorKey ) );
             }
         }
     }
@@ -61,28 +58,42 @@ public abstract class AbstractValidator {
      *            type Set<String>
      */
     @SafeVarargs
-    public static void populateActionMessages( ActionMessages pActionMessages,
-            Set<String>... pErrorKeySet ) {
+    public static void populateActionMessages( ActionMessages pActionMessages, Set<String>... pErrorKeySet ) {
         for ( Set<String> lErrorKeySet : pErrorKeySet ) {
             for ( String lErrorKey : lErrorKeySet ) {
-                pActionMessages.add( ActionMessages.GLOBAL_MESSAGE,
-                        new ActionMessage( lErrorKey ) );
-
+                pActionMessages.add( ActionMessages.GLOBAL_MESSAGE, new ActionMessage( lErrorKey ) );
             }
         }
     }
 
+    @SafeVarargs
+    public static void populateErrors( Errors pErrors, Set<String>... pErrorKeySet ) {
+        for ( Set<String> lErrorKeySet : pErrorKeySet ) {
+            for ( String lErrorKey : lErrorKeySet ) {
+                pErrors.reject( lErrorKey );
+            }
+        }
+    }
+
+    @SafeVarargs
+    public static void populateErrors( Errors pErrors, String pPathName, Set<String>... pErrorKeySet ) {
+        for ( Set<String> lErrorKeySet : pErrorKeySet ) {
+            for ( String lErrorKey : lErrorKeySet ) {
+                pErrors.rejectValue( pPathName, lErrorKey );
+            }
+        }
+    }
+    
     /**
      * 
      * @param pActionErrors
      * @param pErrorKey
      * @param pReplacementTokensSet
      */
-    public static void populateActionErrorsWithReplacementTokens(
-            ActionErrors pActionErrors, String pErrorKey,
-            Object[] pReplacementTokens ) {
-        pActionErrors.add( ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
-                pErrorKey, pReplacementTokens ) );
+    public static void populateActionErrorsWithReplacementTokens( ActionErrors pActionErrors, 
+                                                                  String pErrorKey,
+                                                                  Object[] pReplacementTokens ) {
+        pActionErrors.add( ActionMessages.GLOBAL_MESSAGE, new ActionMessage( pErrorKey, pReplacementTokens ) );
     }
 
     /**
@@ -91,25 +102,20 @@ public abstract class AbstractValidator {
      * @param pErrorKeyPrefix
      * @return
      */
-    public static Set<String> validateEmailAddress( String pEmailAddress,
-            String pErrorKeyPrefix ) {
+    public static Set<String> validateEmailAddress( String pEmailAddress, String pErrorKeyPrefix ) {
         Set<String> lErrorKeySet = new LinkedHashSet<String>();
         if ( pEmailAddress == null || "".equals( pEmailAddress ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".email.required" );
             return lErrorKeySet;
         }
-        if ( ( pEmailAddress == null ) || "".equals( pEmailAddress ) ) {
+        /*if ( pEmailAddress.length() < EMAIL_ADDRESS_MIN_LENGTH ) {
+            lErrorKeySet.add( pErrorKeyPrefix + ".email.min" ); 
             return lErrorKeySet;
-        }
-        if ( pEmailAddress.length() < EMAIL_ADDRESS_MIN_LENGTH ) {
-            lErrorKeySet.add( pErrorKeyPrefix + ".email.min" );
-            return lErrorKeySet;
-        }
-        if ( pEmailAddress.length() > EMAIL_ADDRESS_MAX_LENGTH ) {
-            lErrorKeySet.add( pErrorKeyPrefix + ".email.max" );
-        }
-        if ( !ValidatorUtil.validateAllowedCharacters( pEmailAddress,
-                EMAIL_ADDRESS_ALLOWED_REGEX ) ) {
+        } 
+        if ( pEmailAddress.length() > EMAIL_ADDRESS_MAX_LENGTH ) { 
+            lErrorKeySet.add( pErrorKeyPrefix + ".email.max" ); 
+        }*/        
+        if ( !ValidatorUtil.validateAllowedCharacters( pEmailAddress, EMAIL_ADDRESS_ALLOWED_REGEX ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".email.notvalid" );
         }
         return lErrorKeySet;

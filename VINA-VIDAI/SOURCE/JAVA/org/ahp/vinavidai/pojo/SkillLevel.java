@@ -34,7 +34,8 @@ import org.ahp.core.pojo.BaseEntity;
  * 
  */
 @Entity
-@Table(name = "SKILL_LEVEL", schema = "VINAVIDAI")
+//@Table(name = "SKILL_LEVEL", schema = "VINAVIDAI")
+@Table(name = "SKILL_LEVEL")
 public class SkillLevel extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

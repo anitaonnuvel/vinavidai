@@ -64,8 +64,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ProcessEditQuestion extends AhpAbstractProcessAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( ProcessEditQuestion.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( ProcessEditQuestion.class );
 
     private QuizService mQuizService;
 
@@ -74,46 +73,32 @@ public class ProcessEditQuestion extends AhpAbstractProcessAction {
     }
 
     @Override
-    public ActionForward process( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward process( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         EditQuestionForm lEditQuestionForm = ( EditQuestionForm ) pActionForm;
         if ( !lEditQuestionForm.isSubmitAction( SubmitActions.EMPTY ) ) {
             if ( lEditQuestionForm.isSubmitAction( SubmitActions.ADD_OPTION )
-                    || lEditQuestionForm
-                            .isSubmitAction( SubmitActions.DELETE_OPTION )
+                    || lEditQuestionForm.isSubmitAction( SubmitActions.DELETE_OPTION )
                     || lEditQuestionForm.isSubmitAction( SubmitActions.RESET ) ) {
-                lEditQuestionForm
-                        .setNextPage( NavigateActions.DisplayEditQuestion
-                                .toString() );
+                lEditQuestionForm.setNextPage( NavigateActions.DisplayEditQuestion.toString() );
             }
             if ( lEditQuestionForm.isSubmitAction( SubmitActions.NEXT ) ) {
-                lEditQuestionForm
-                        .setNextPage( NavigateActions.DisplayEditQuestion
-                                .toString() );
+                lEditQuestionForm.setNextPage( NavigateActions.DisplayEditQuestion.toString() );
                 this.storeQuestion( lEditQuestionForm, lLoggedInUser );
             }
             if ( lEditQuestionForm.isSubmitAction( SubmitActions.COMPLETE ) ) {
-                lEditQuestionForm
-                        .setNextPage( NavigateActions.DisplayEditQuizCompleted
-                                .toString() );
-                pHttpServletRequest.getSession().setAttribute(
-                        QUIZ_UNDER_CREATION, null );
+                lEditQuestionForm.setNextPage( NavigateActions.DisplayEditQuizCompleted.toString() );
+                pHttpServletRequest.getSession().setAttribute( QUIZ_UNDER_CREATION, null );
                 this.storeQuestion( lEditQuestionForm, lLoggedInUser );
             }
             if ( lEditQuestionForm.isSubmitAction( SubmitActions.CANCEL ) ) {
-                lEditQuestionForm
-                        .setNextPage( NavigateActions.DisplayEditQuizCancelled
-                                .toString() );
+                lEditQuestionForm.setNextPage( NavigateActions.DisplayEditQuizCancelled.toString() );
             }
         } else {
-            lEditQuestionForm.setNextPage( NavigateActions.DisplayEditQuestion
-                    .toString() );
+            lEditQuestionForm.setNextPage( NavigateActions.DisplayEditQuestion.toString() );
         }
-        return pActionMapping.findForward( NavigateActions.DisplayEditQuestion
-                .toString() );
+        return pActionMapping.findForward( NavigateActions.DisplayEditQuestion.toString() );
     }
 
     /**
@@ -121,55 +106,42 @@ public class ProcessEditQuestion extends AhpAbstractProcessAction {
      * @param pEditQuestionForm
      * @param pLoggedInUser
      */
-    private void storeQuestion( EditQuestionForm pEditQuestionForm,
-            User pLoggedInUser ) {
+    private void storeQuestion( EditQuestionForm pEditQuestionForm, User pLoggedInUser ) {
         Quiz lQuizUnderCreation = pEditQuestionForm.getQuiz();
         Question lQuestion = new Question();
         Audit lAudit = AhpBusinessDelegate.createAudit( pLoggedInUser );
         lQuestion.setAudit( lAudit );
         lQuestion.setQuiz( lQuizUnderCreation );
-        lQuestion.setQuestionType( QuestionType.valueOf( pEditQuestionForm
-                .getQuestionType() ) );
-        lQuestion.setQuestionDescription( pEditQuestionForm
-                .getQuestionDescription() );
-        lQuestion.setQuestionObjective( pEditQuestionForm
-                .getQuestionObjective() );
+        lQuestion.setQuestionType( QuestionType.valueOf( pEditQuestionForm.getQuestionType() ) );
+        lQuestion.setQuestionDescription( pEditQuestionForm.getQuestionDescription() );
+        lQuestion.setQuestionObjective( pEditQuestionForm.getQuestionObjective() );
         if ( lQuizUnderCreation.getQuestions() != null ) {
-            lQuestion.setQuestionOrder( pEditQuestionForm.getQuiz()
-                    .getQuestions().size() + 1 );
+            lQuestion.setQuestionOrder( pEditQuestionForm.getQuiz().getQuestions().size() + 1 );
         } else {
             lQuestion.setQuestionOrder( 1 );
         }
         Category lCategory = new Category();
-        lCategory.setCategoryId( pEditQuestionForm
-                .getSelectedQuestionCategory() );
+        lCategory.setCategoryId( pEditQuestionForm.getSelectedQuestionCategory() );
         lQuestion.setCategory( lCategory );
 
         SkillLevel lSkillLevel = new SkillLevel();
-        lSkillLevel.setSkillLevelId( pEditQuestionForm
-                .getSelectedQuestionSkillLevel() );
+        lSkillLevel.setSkillLevelId( pEditQuestionForm.getSelectedQuestionSkillLevel() );
         lQuestion.setSkillLevel( lSkillLevel );
 
         lQuestion.setQuestionPoints( pEditQuestionForm.getQuestionPoints() );
 
         long lQuestionDuration = -1;
-        if ( StringUtils.isNotBlank( pEditQuestionForm
-                .getResponseDurationInHours() ) ) {
+        if ( StringUtils.isNotBlank( pEditQuestionForm.getResponseDurationInHours() ) ) {
             lQuestionDuration += TimeUnit.MILLISECONDS.convert(
-                    Long.parseLong( pEditQuestionForm
-                            .getResponseDurationInHours() ), TimeUnit.HOURS );
+                    Long.parseLong( pEditQuestionForm.getResponseDurationInHours() ), TimeUnit.HOURS );
         }
-        if ( StringUtils.isNotBlank( pEditQuestionForm
-                .getResponseDurationInMinutes() ) ) {
+        if ( StringUtils.isNotBlank( pEditQuestionForm.getResponseDurationInMinutes() ) ) {
             lQuestionDuration += TimeUnit.MILLISECONDS.convert(
-                    Long.parseLong( pEditQuestionForm
-                            .getResponseDurationInHours() ), TimeUnit.MINUTES );
+                    Long.parseLong( pEditQuestionForm.getResponseDurationInHours() ), TimeUnit.MINUTES );
         }
-        if ( StringUtils.isNotBlank( pEditQuestionForm
-                .getResponseDurationInSeconds() ) ) {
+        if ( StringUtils.isNotBlank( pEditQuestionForm.getResponseDurationInSeconds() ) ) {
             lQuestionDuration += TimeUnit.MILLISECONDS.convert(
-                    Long.parseLong( pEditQuestionForm
-                            .getResponseDurationInHours() ), TimeUnit.SECONDS );
+                    Long.parseLong( pEditQuestionForm.getResponseDurationInHours() ), TimeUnit.SECONDS );
         }
         lQuestion.setQuestionDuration( lQuestionDuration );
         if ( lQuestion.getQuestionType().equals( QuestionType.MultipleChoice )
@@ -182,15 +154,12 @@ public class ProcessEditQuestion extends AhpAbstractProcessAction {
             }
         }
         if ( lQuestion.getQuestionType().equals( QuestionType.TrueOrFalse )
-                || lQuestion.getQuestionType()
-                        .equals( QuestionType.Descriptive ) ) {
+                || lQuestion.getQuestionType().equals( QuestionType.Descriptive ) ) {
             Option lOption = pEditQuestionForm.getOptions().get( 0 );
             lOption.setQuestion( lQuestion );
-            if ( !StringUtils.isEmpty( lOption
-                    .getDescriptionQuestionMaximumSizeTypeStr() ) ) {
-                lOption.setDescriptionQuestionMaximumSizeType( DescriptionQuestionMaximumSizeType
-                        .valueOf( lOption
-                                .getDescriptionQuestionMaximumSizeTypeStr() ) );
+            if ( !StringUtils.isEmpty( lOption.getDescriptionQuestionMaximumSizeTypeStr() ) ) {
+                lOption.setDescriptionQuestionMaximumSizeType( DescriptionQuestionMaximumSizeType.valueOf( lOption
+                        .getDescriptionQuestionMaximumSizeTypeStr() ) );
             }
             lOption.setAudit( lAudit );
             List<Option> lOptions = new LinkedList<Option>();

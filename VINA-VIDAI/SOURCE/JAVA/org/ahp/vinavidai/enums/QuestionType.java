@@ -22,6 +22,13 @@ package org.ahp.vinavidai.enums;
  */
 public enum QuestionType {
 
-    MultipleChoice, TrueOrFalse, MultipleOptions, FillInTheBlank, WordList, Matching, Ordering, Descriptive
+    MultipleChoice, 
+    TrueOrFalse, 
+    MultipleOptions, 
+    FillInTheBlank, 
+    WordList, 
+    Matching, 
+    Ordering, 
+    Descriptive
 
 }

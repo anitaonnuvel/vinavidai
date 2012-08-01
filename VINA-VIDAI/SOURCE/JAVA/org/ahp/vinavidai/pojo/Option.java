@@ -38,7 +38,8 @@ import org.ahp.vinavidai.enums.DescriptionQuestionMaximumSizeType;
  * 
  */
 @Entity
-@Table(name = "OPTION", schema = "VINAVIDAI")
+//@Table(name = "OPTION", schema = "VINAVIDAI")
+@Table(name = "OPTION")
 public class Option extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

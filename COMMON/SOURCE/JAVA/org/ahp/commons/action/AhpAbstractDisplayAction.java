@@ -32,16 +32,18 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AhpAbstractDisplayAction extends AhpAbstractAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpAbstractDisplayAction.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpAbstractDisplayAction.class );
 
     @Override
-    public ActionForward execute( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) throws Exception {
+    public ActionForward execute( ActionMapping pActionMapping, 
+                                  ActionForm pActionForm,
+                                  HttpServletRequest pHttpServletRequest, 
+                                  HttpServletResponse pHttpServletResponse ) throws Exception {
         AhpAbstractForm lAbstractForm = ( AhpAbstractForm ) pActionForm;
-        ActionForward lDisplayActionForward = display( pActionMapping,
-                pActionForm, pHttpServletRequest, pHttpServletResponse );
+        ActionForward lDisplayActionForward = display( pActionMapping, 
+                                                       pActionForm, 
+                                                       pHttpServletRequest,
+                                                       pHttpServletResponse );
         super.clearNavigation( lAbstractForm );
         return lDisplayActionForward;
     }
@@ -54,8 +56,9 @@ public abstract class AhpAbstractDisplayAction extends AhpAbstractAction {
      * @param pHttpServletResponse
      * @return
      */
-    public abstract ActionForward display( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse );
+    public abstract ActionForward display( ActionMapping pActionMapping, 
+                                           ActionForm pActionForm,
+                                           HttpServletRequest pHttpServletRequest, 
+                                           HttpServletResponse pHttpServletResponse );
 
 }

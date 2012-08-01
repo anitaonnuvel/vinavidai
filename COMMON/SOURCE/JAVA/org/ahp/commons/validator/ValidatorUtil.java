@@ -37,8 +37,7 @@ public final class ValidatorUtil {
      * @param pRegex
      * @return
      */
-    public static boolean validateAllowedCharacters( String pInputString,
-            String pRegex ) {
+    public static boolean validateAllowedCharacters( String pInputString, String pRegex ) {
         Pattern lPattern = Pattern.compile( pRegex );
         Matcher lMatcher = lPattern.matcher( pInputString );
         return lMatcher.matches();

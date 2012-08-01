@@ -32,38 +32,29 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Anita Onnuvel
  * 
- * @spring.bean id="ahpMessageResourceManager"
+ * @spring.bean 
+ *     id="ahpMessageResourceManager"
  */
 public class AhpMessageResourceManager implements IAhpMessageResourceManager {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpMessageResourceManager.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpMessageResourceManager.class );
 
     private Map<String, ResourceBundle> mResourceBundles = new HashMap<String, ResourceBundle>();
 
     @Override
     public void init( AhpConfiguration pAhpConfiguration ) {
-        Map<String, AhpMessageResource> lAhpMessageResources = pAhpConfiguration
-                .getAhpMessageResources();
-        for ( Map.Entry<String, AhpMessageResource> lAhpMessageResourcesEntry : lAhpMessageResources
-                .entrySet() ) {
-            AhpMessageResource lAhpMessageResource = lAhpMessageResourcesEntry
-                    .getValue();
+        Map<String, AhpMessageResource> lAhpMessageResources = pAhpConfiguration.getAhpMessageResources();
+        for ( Map.Entry<String, AhpMessageResource> lAhpMessageResourcesEntry : lAhpMessageResources.entrySet() ) {
+            AhpMessageResource lAhpMessageResource = lAhpMessageResourcesEntry.getValue();
             if ( lAhpMessageResource.getLoadType() == AhpMessageResourceLoadType.FileSystem ) {
-                LOGGER.debug( "Loading MessageResource "
-                        + lAhpMessageResourcesEntry.getKey()
-                        + " from FileSystem" );
+                LOGGER.debug( "Loading MessageResource " + lAhpMessageResourcesEntry.getKey() + " from FileSystem" );
                 String lBundleName = lAhpMessageResource.getResource();
                 if ( "".equals( lBundleName ) )
                     lBundleName = null;
-                ResourceBundle lResourceBundle = ResourceBundle
-                        .getBundle( lBundleName );
-                mResourceBundles.put( lAhpMessageResourcesEntry.getKey(),
-                        lResourceBundle );
+                ResourceBundle lResourceBundle = ResourceBundle.getBundle( lBundleName );
+                mResourceBundles.put( lAhpMessageResourcesEntry.getKey(), lResourceBundle );
             } else {
-                LOGGER.debug( "Loading MessageResource "
-                        + lAhpMessageResourcesEntry.getKey()
-                        + " from FileSystem" );
+                LOGGER.debug( "Loading MessageResource " + lAhpMessageResourcesEntry.getKey() + " from FileSystem" );
             }
         }
     }
@@ -81,8 +72,7 @@ public class AhpMessageResourceManager implements IAhpMessageResourceManager {
     }
 
     @Override
-    public String getMessage( AhpExceptionCodes pExceptionCode,
-            Object[] pMessageArguments, String pResourceName ) {
+    public String getMessage( AhpExceptionCodes pExceptionCode, Object[] pMessageArguments, String pResourceName ) {
         ResourceBundle lResourceBundle = null;
         if ( pResourceName == null && mResourceBundles.size() == 1 ) {
             lResourceBundle = mResourceBundles.get( null );
@@ -99,8 +89,7 @@ public class AhpMessageResourceManager implements IAhpMessageResourceManager {
     }
 
     @Override
-    public String getMessage( AhpExceptionCodes pExceptionCode,
-            Object[] pMessageArguments ) {
+    public String getMessage( AhpExceptionCodes pExceptionCode, Object[] pMessageArguments ) {
         return getMessage( pExceptionCode, pMessageArguments, null );
     }
 
@@ -110,8 +99,7 @@ public class AhpMessageResourceManager implements IAhpMessageResourceManager {
     }
 
     @Override
-    public String getMessage( AhpExceptionCodes pExceptionCode,
-            String pResourceName ) {
+    public String getMessage( AhpExceptionCodes pExceptionCode, String pResourceName ) {
         return getMessage( pExceptionCode, null, pResourceName );
     }
 

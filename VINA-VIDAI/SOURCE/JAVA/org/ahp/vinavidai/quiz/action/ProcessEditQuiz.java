@@ -57,8 +57,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ProcessEditQuiz extends AhpAbstractProcessAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( ProcessEditQuiz.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( ProcessEditQuiz.class );
 
     private QuizService mQuizService;
 
@@ -67,33 +66,25 @@ public class ProcessEditQuiz extends AhpAbstractProcessAction {
     }
 
     @Override
-    public ActionForward process( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward process( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         EditQuizForm lEditQuizForm = ( EditQuizForm ) pActionForm;
-        Quiz lQuizUnderEdit = ( Quiz ) pHttpServletRequest
-                .getAttribute( QUIZ_UNDER_EDIT );
+        Quiz lQuizUnderEdit = ( Quiz ) pHttpServletRequest.getAttribute( QUIZ_UNDER_EDIT );
         if ( lQuizUnderEdit == null ) {
             if ( lEditQuizForm.isSubmitAction( SubmitActions.SAVE_CHANGES ) ) {
-                Quiz lUpdatedQuiz = this.updateQuiz( lEditQuizForm,
-                        lLoggedInUser );
+                Quiz lUpdatedQuiz = this.updateQuiz( lEditQuizForm, lLoggedInUser );
                 lEditQuizForm.setQuizUnderEdit( lUpdatedQuiz );
-                lEditQuizForm.setNextPage( NavigateActions.EditQuestions
-                        .toString() );
+                lEditQuizForm.setNextPage( NavigateActions.EditQuestions.toString() );
             } else {
-                lEditQuizForm.setNextPage( NavigateActions.DisplayEditQuiz
-                        .toString() );
+                lEditQuizForm.setNextPage( NavigateActions.DisplayEditQuiz.toString() );
             }
         } else {
             lEditQuizForm.setQuizUnderEdit( lQuizUnderEdit );
-            lEditQuizForm.setNextPage( NavigateActions.DisplayEditQuiz
-                    .toString() );
+            lEditQuizForm.setNextPage( NavigateActions.DisplayEditQuiz.toString() );
         }
 
-        return pActionMapping.findForward( NavigateActions.DisplayEditQuiz
-                .toString() );
+        return pActionMapping.findForward( NavigateActions.DisplayEditQuiz.toString() );
     }
 
     /**
@@ -116,23 +107,17 @@ public class ProcessEditQuiz extends AhpAbstractProcessAction {
         lQuizUnderEdit.setSkillLevels( skillList );
 
         lQuizUnderEdit.getAudit().setLastUpdatedBy( pLoggedInUser.getUserId() );
-        lQuizUnderEdit.getAudit().setLastUpdatedDate(
-                new Date( System.currentTimeMillis() ) );
-        if ( pEditQuizForm.getDeleteCategoryIdSet().size() != 0
-                || pEditQuizForm.getDeleteSkillLevelIdSet().size() != 0 ) {
-            Category lDefaultCategory = this.mQuizService
-                    .getDefaultCategory( lQuizUnderEdit );
-            SkillLevel lDefaultSkillLevel = this.mQuizService
-                    .getDefaultSkillLevel( lQuizUnderEdit );
+        lQuizUnderEdit.getAudit().setLastUpdatedDate( new Date( System.currentTimeMillis() ) );
+        if ( pEditQuizForm.getDeleteCategoryIdSet().size() != 0 || pEditQuizForm.getDeleteSkillLevelIdSet().size() != 0 ) {
+            Category lDefaultCategory = this.mQuizService.getDefaultCategory( lQuizUnderEdit );
+            SkillLevel lDefaultSkillLevel = this.mQuizService.getDefaultSkillLevel( lQuizUnderEdit );
             for ( Question lQuestion : lQuizUnderEdit.getQuestions() ) {
-                if ( pEditQuizForm.getDeleteCategoryIdSet().contains(
-                        lQuestion.getCategory().getCategoryId() ) )
+                if ( pEditQuizForm.getDeleteCategoryIdSet().contains( lQuestion.getCategory().getCategoryId() ) )
                     ;
                 {
                     lQuestion.setCategory( lDefaultCategory );
                 }
-                if ( pEditQuizForm.getDeleteSkillLevelIdSet().contains(
-                        lQuestion.getSkillLevel().getSkillLevelId() ) ) {
+                if ( pEditQuizForm.getDeleteSkillLevelIdSet().contains( lQuestion.getSkillLevel().getSkillLevelId() ) ) {
                     lQuestion.setSkillLevel( lDefaultSkillLevel );
                 }
             }

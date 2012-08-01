@@ -37,92 +37,111 @@ import org.apache.struts.action.ActionErrors;
  */
 public final class QuizValidator extends BaseValidator {
 
-    @SuppressWarnings("unchecked")
-    public static void validateQuizName( String pQuizName,
-            String pErrorKeyPrefix, ActionErrors pActionErrors ) {
+    /**
+     * 
+     * @param pQuizName
+     * @param pErrorKeyPrefix
+     * @param pActionErrors
+     */
+    public static void validateQuizName( String pQuizName, 
+                                         String pErrorKeyPrefix, 
+                                         ActionErrors pActionErrors ) {
         Set<String> lErrorKeySet = new LinkedHashSet<String>();
         if ( pQuizName == null || "".equals( pQuizName ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".name.required" );
-            AbstractValidator
-                    .populateActionErrors( pActionErrors, lErrorKeySet );
+            AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
             return;
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static void validateQuizDescription( String pQuizDescription,
-            String pErrorKeyPrefix, ActionErrors pActionErrors ) {
+    /**
+     * 
+     * @param pQuizDescription
+     * @param pErrorKeyPrefix
+     * @param pActionErrors
+     */
+    public static void validateQuizDescription( String pQuizDescription, 
+                                                String pErrorKeyPrefix,
+                                                ActionErrors pActionErrors ) {
         Set<String> lErrorKeySet = new LinkedHashSet<String>();
         if ( pQuizDescription == null || "".equals( pQuizDescription ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".description.required" );
-            AbstractValidator
-                    .populateActionErrors( pActionErrors, lErrorKeySet );
+            AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
             return;
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static void validateTestDuration( String pQuizFixedDurationHours,
-            String pQuizFixedDurationMinutes, String pErrorKeyPrefix,
-            ActionErrors pActionErrors ) {
+    /**
+     * 
+     * @param pQuizFixedDurationHours
+     * @param pQuizFixedDurationMinutes
+     * @param pErrorKeyPrefix
+     * @param pActionErrors
+     */
+    public static void validateTestDuration( String pQuizFixedDurationHours, 
+                                             String pQuizFixedDurationMinutes,
+                                             String pErrorKeyPrefix, 
+                                             ActionErrors pActionErrors ) {
         Set<String> lErrorKeySet = new LinkedHashSet<String>();
-        if ( ( pQuizFixedDurationHours == null || "0"
-                .equals( pQuizFixedDurationHours ) )
-                & ( pQuizFixedDurationMinutes == null || "0"
-                        .equals( pQuizFixedDurationMinutes ) ) ) {
+        if ( ( pQuizFixedDurationHours == null || "0".equals( pQuizFixedDurationHours ) )
+                & ( pQuizFixedDurationMinutes == null || "0".equals( pQuizFixedDurationMinutes ) ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".duration.invalid" );
-            AbstractValidator
-                    .populateActionErrors( pActionErrors, lErrorKeySet );
+            AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static void validateTestAccessTime( String pQuizAccessStartTime,
-            String pQuizAccessEndTime, String pErrorKeyPrefix,
-            ActionErrors pActionErrors ) {
+    /**
+     * 
+     * @param pQuizAccessStartTime
+     * @param pQuizAccessEndTime
+     * @param pErrorKeyPrefix
+     * @param pActionErrors
+     */
+    public static void validateTestAccessTime( String pQuizAccessStartTime, 
+                                               String pQuizAccessEndTime,
+                                               String pErrorKeyPrefix, 
+                                               ActionErrors pActionErrors ) {
         Set<String> lErrorKeySet = new LinkedHashSet<String>();
         if ( ( pQuizAccessStartTime == null || "".equals( pQuizAccessStartTime ) )
-                & ( pQuizAccessEndTime == null || ""
-                        .equals( pQuizAccessEndTime ) ) ) {
+                & ( pQuizAccessEndTime == null || "".equals( pQuizAccessEndTime ) ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".accesstime.required" );
-            AbstractValidator
-                    .populateActionErrors( pActionErrors, lErrorKeySet );
+            AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
             return;
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static void validateTestResponseDuration(
-            String pResponseDurationPerQuestionHours,
-            String pResponseDurationPerQuestionMinutes,
-            String pResponseDurationPerQuestionSeconds,
-            String pFixedDurationHours, String pFixedDurationMinutes,
-            String pErrorKeyPrefix, ActionErrors pActionErrors ) {
+    /**
+     * 
+     * @param pResponseDurationPerQuestionHours
+     * @param pResponseDurationPerQuestionMinutes
+     * @param pResponseDurationPerQuestionSeconds
+     * @param pFixedDurationHours
+     * @param pFixedDurationMinutes
+     * @param pErrorKeyPrefix
+     * @param pActionErrors
+     */
+    public static void validateTestResponseDuration( String pResponseDurationPerQuestionHours,
+                                                     String pResponseDurationPerQuestionMinutes, 
+                                                     String pResponseDurationPerQuestionSeconds,
+                                                     String pFixedDurationHours, 
+                                                     String pFixedDurationMinutes, 
+                                                     String pErrorKeyPrefix, 
+                                                     ActionErrors pActionErrors ) {
         Set<String> lErrorKeySet = new LinkedHashSet<String>();
-        if ( ( pResponseDurationPerQuestionHours == null || "0"
-                .equals( pResponseDurationPerQuestionHours ) )
-                & ( pResponseDurationPerQuestionMinutes == null || "0"
-                        .equals( pResponseDurationPerQuestionMinutes ) )
-                & ( pResponseDurationPerQuestionSeconds == null || "0"
-                        .equals( pResponseDurationPerQuestionSeconds ) ) ) {
+        if ( ( pResponseDurationPerQuestionHours == null || "0".equals( pResponseDurationPerQuestionHours ) )
+                & ( pResponseDurationPerQuestionMinutes == null || "0".equals( pResponseDurationPerQuestionMinutes ) )
+                & ( pResponseDurationPerQuestionSeconds == null || "0".equals( pResponseDurationPerQuestionSeconds ) ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".responseduration.invalid" );
-            AbstractValidator
-                    .populateActionErrors( pActionErrors, lErrorKeySet );
+            AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
             return;
         }
-        long lQuizDuration = TimeUnit.MILLISECONDS.convert(
-                Long.parseLong( pFixedDurationHours ), TimeUnit.HOURS )
-                + TimeUnit.MILLISECONDS.convert(
-                        Long.parseLong( pFixedDurationMinutes ),
-                        TimeUnit.MINUTES );
-        long lQuestionDuration = TimeUnit.MILLISECONDS.convert(
-                Long.parseLong( pResponseDurationPerQuestionHours ),
+        long lQuizDuration = TimeUnit.MILLISECONDS.convert( Long.parseLong( pFixedDurationHours ), TimeUnit.HOURS )
+                + TimeUnit.MILLISECONDS.convert( Long.parseLong( pFixedDurationMinutes ), TimeUnit.MINUTES );
+        long lQuestionDuration = TimeUnit.MILLISECONDS.convert( Long.parseLong( pResponseDurationPerQuestionHours ),
                 TimeUnit.HOURS )
-                + TimeUnit.MILLISECONDS.convert(
-                        Long.parseLong( pResponseDurationPerQuestionMinutes ),
+                + TimeUnit.MILLISECONDS.convert( Long.parseLong( pResponseDurationPerQuestionMinutes ),
                         TimeUnit.MINUTES )
-                + TimeUnit.MILLISECONDS.convert(
-                        Long.parseLong( pResponseDurationPerQuestionSeconds ),
+                + TimeUnit.MILLISECONDS.convert( Long.parseLong( pResponseDurationPerQuestionSeconds ),
                         TimeUnit.SECONDS );
         if ( lQuestionDuration > lQuizDuration ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".responseduration.exceeds" );
@@ -130,14 +149,19 @@ public final class QuizValidator extends BaseValidator {
         AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
     }
 
-    @SuppressWarnings("unchecked")
-    public static void validateTestPassPercentile( String pQuizPassPercentile,
-            String pErrorKeyPrefix, ActionErrors pActionErrors ) {
+    /**
+     * 
+     * @param pQuizPassPercentile
+     * @param pErrorKeyPrefix
+     * @param pActionErrors
+     */
+    public static void validateTestPassPercentile( String pQuizPassPercentile, 
+                                                   String pErrorKeyPrefix,
+                                                   ActionErrors pActionErrors ) {
         Set<String> lErrorKeySet = new LinkedHashSet<String>();
         if ( pQuizPassPercentile == null || "".equals( pQuizPassPercentile ) ) {
             lErrorKeySet.add( pErrorKeyPrefix + ".passpercentile.required" );
-            AbstractValidator
-                    .populateActionErrors( pActionErrors, lErrorKeySet );
+            AbstractValidator.populateActionErrors( pActionErrors, lErrorKeySet );
             return;
         }
         int lQuizPassPercentile = Integer.parseInt( pQuizPassPercentile );
@@ -152,12 +176,10 @@ public final class QuizValidator extends BaseValidator {
      * @param pCreateQuizForm
      * @param pActionErrors
      */
-    public static void validateCreateQuizForm( CreateQuizForm pCreateQuizForm,
-            ActionErrors pActionErrors ) {
-        validateQuizName( pCreateQuizForm.getQuizName(),
-                CREATE_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
-        validateQuizDescription( pCreateQuizForm.getQuizDescription(),
-                CREATE_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+    public static void validateCreateQuizForm( CreateQuizForm pCreateQuizForm, 
+                                               ActionErrors pActionErrors ) {
+        validateQuizName( pCreateQuizForm.getQuizName(), CREATE_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+        validateQuizDescription( pCreateQuizForm.getQuizDescription(), CREATE_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
 
     }
 
@@ -166,18 +188,22 @@ public final class QuizValidator extends BaseValidator {
      * @param pCreateQuizForm
      * @param pActionErrors
      */
-    public static void validateEditQuizForm( EditQuizForm pEditQuizForm,
-            ActionErrors pActionErrors ) {
-        validateQuizName( pEditQuizForm.getQuizName(),
-                EDIT_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
-        validateQuizDescription( pEditQuizForm.getQuizDescription(),
-                EDIT_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
-        validateCategory( pEditQuizForm.getCategory(),
-                EDIT_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+    public static void validateEditQuizForm( EditQuizForm pEditQuizForm, 
+                                             ActionErrors pActionErrors ) {
+        validateQuizName( pEditQuizForm.getQuizName(), EDIT_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+        validateQuizDescription( pEditQuizForm.getQuizDescription(), EDIT_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+        validateCategory( pEditQuizForm.getCategory(), EDIT_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
     }
 
-    private static void validateCategory( List<Category> pCategory,
-            String pEditQuizErrorKeyPrefix, ActionErrors pActionErrors ) {
+    /**
+     * 
+     * @param pCategory
+     * @param pEditQuizErrorKeyPrefix
+     * @param pActionErrors
+     */
+    private static void validateCategory( List<Category> pCategory, 
+                                          String pEditQuizErrorKeyPrefix,
+                                          ActionErrors pActionErrors ) {
 
     }
 
@@ -186,36 +212,26 @@ public final class QuizValidator extends BaseValidator {
      * @param pPublishQuizForm
      * @param pActionErrors
      */
-    public static void validatePublishQuizForm(
-            PublishQuizForm pPublishQuizForm, ActionErrors pActionErrors ) {
-        validateQuizName( pPublishQuizForm.getTestName(),
-                PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
-        validateQuizDescription( pPublishQuizForm.getTestDescription(),
-                PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
-        if ( pPublishQuizForm.getTestDurationType().equals(
-                DurationType.Timed.toString() ) ) {
-            validateTestDuration( pPublishQuizForm.getFixedDurationHours(),
-                    pPublishQuizForm.getFixedDurationMinutes(),
+    public static void validatePublishQuizForm( PublishQuizForm pPublishQuizForm, 
+                                                ActionErrors pActionErrors ) {
+        validateQuizName( pPublishQuizForm.getTestName(), PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+        validateQuizDescription( pPublishQuizForm.getTestDescription(), PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+        if ( pPublishQuizForm.getTestDurationType().equals( DurationType.Timed.toString() ) ) {
+            validateTestDuration( pPublishQuizForm.getFixedDurationHours(), pPublishQuizForm.getFixedDurationMinutes(),
                     PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
         }
-        if ( pPublishQuizForm.getTestAccessTimeType().equals(
-                DurationType.Timed.toString() ) ) {
+        if ( pPublishQuizForm.getTestAccessTimeType().equals( DurationType.Timed.toString() ) ) {
             validateTestAccessTime( pPublishQuizForm.getTestAccessStartTime(),
-                    pPublishQuizForm.getTestAccessStartTime(),
-                    PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+                    pPublishQuizForm.getTestAccessStartTime(), PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
         }
-        if ( pPublishQuizForm.getResponseDurationPerQuestionType().equals(
-                DurationType.Timed.toString() ) ) {
-            validateTestResponseDuration(
-                    pPublishQuizForm.getResponseDurationPerQuestionHours(),
+        if ( pPublishQuizForm.getResponseDurationPerQuestionType().equals( DurationType.Timed.toString() ) ) {
+            validateTestResponseDuration( pPublishQuizForm.getResponseDurationPerQuestionHours(),
                     pPublishQuizForm.getResponseDurationPerQuestionMinutes(),
-                    pPublishQuizForm.getResponseDurationPerQuestionSeconds(),
-                    pPublishQuizForm.getFixedDurationHours(),
-                    pPublishQuizForm.getFixedDurationMinutes(),
-                    PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+                    pPublishQuizForm.getResponseDurationPerQuestionSeconds(), pPublishQuizForm.getFixedDurationHours(),
+                    pPublishQuizForm.getFixedDurationMinutes(), PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
         }
-        validateTestPassPercentile( pPublishQuizForm.getTestPassPercentile(),
-                PUBLISH_QUIZ_ERROR_KEY_PREFIX, pActionErrors );
+        validateTestPassPercentile( pPublishQuizForm.getTestPassPercentile(), PUBLISH_QUIZ_ERROR_KEY_PREFIX,
+                pActionErrors );
     }
 
     /**
@@ -223,8 +239,8 @@ public final class QuizValidator extends BaseValidator {
      * @param pCreateQuizForm
      * @param pActionErrors
      */
-    public static void validateManageQuizForm( ManageQuizForm pManageQuizForm,
-            ActionErrors pActionErrors ) {
+    public static void validateManageQuizForm( ManageQuizForm pManageQuizForm, 
+                                               ActionErrors pActionErrors ) {
         if ( pManageQuizForm.getSelectedQuizId() == null ) {
             String lReplacementToken = "";
             if ( pManageQuizForm.isSubmitAction( SubmitActions.EDIT ) )
@@ -233,10 +249,8 @@ public final class QuizValidator extends BaseValidator {
                 lReplacementToken = "Publishing";
             if ( pManageQuizForm.isSubmitAction( SubmitActions.REPORTS ) )
                 lReplacementToken = "viewing Reports";
-            AbstractValidator.populateActionErrorsWithReplacementTokens(
-                    pActionErrors, MANAGE_QUIZ_ERROR_KEY_PREFIX
-                            + ".notselected",
-                    new Object[] { lReplacementToken } );
+            AbstractValidator.populateActionErrorsWithReplacementTokens( pActionErrors, MANAGE_QUIZ_ERROR_KEY_PREFIX
+                    + ".notselected", new Object[] { lReplacementToken } );
         }
     }
 }

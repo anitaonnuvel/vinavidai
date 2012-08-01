@@ -42,7 +42,8 @@ import org.ahp.vinavidai.enums.QuestionType;
  * 
  */
 @Entity
-@Table(name = "QUESTION", schema = "VINAVIDAI")
+//@Table(name = "QUESTION", schema = "VINAVIDAI")
+@Table(name = "QUESTION")
 public class Question extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -59,8 +59,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ProcessCreateQuiz extends AhpAbstractProcessAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( ProcessCreateQuiz.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( ProcessCreateQuiz.class );
 
     private QuizService mQuizService;
 
@@ -69,35 +68,25 @@ public class ProcessCreateQuiz extends AhpAbstractProcessAction {
     }
 
     @Override
-    public ActionForward process( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
+    public ActionForward process( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
         LOGGER.trace( "ProcessCreateQuiz :: starts" );
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         CreateQuizForm lCreateQuizForm = ( CreateQuizForm ) pActionForm;
         if ( lCreateQuizForm.isSubmitAction( SubmitActions.SAVE ) ) {
-            lCreateQuizForm.setNextPage( NavigateActions.DisplayCreateQuestion
-                    .toString() );
+            lCreateQuizForm.setNextPage( NavigateActions.DisplayCreateQuestion.toString() );
             Quiz lQuiz = this.storeQuiz( lCreateQuizForm, lLoggedInUser );
-            pHttpServletRequest.getSession().setAttribute( QUIZ_UNDER_CREATION,
-                    lQuiz );
-            lCreateQuizForm
-                    .setNextPage( NavigateActions.DisplayCreateQuizConfirmation
-                            .toString() );
-        } else if ( lCreateQuizForm
-                .isSubmitAction( SubmitActions.SAVE_AND_ADD_QUESTIONS ) ) {
+            pHttpServletRequest.getSession().setAttribute( QUIZ_UNDER_CREATION, lQuiz );
+            lCreateQuizForm.setNextPage( NavigateActions.DisplayCreateQuizConfirmation.toString() );
+        } else if ( lCreateQuizForm.isSubmitAction( SubmitActions.SAVE_AND_ADD_QUESTIONS ) ) {
             Quiz lStoredQuiz = this.storeQuiz( lCreateQuizForm, lLoggedInUser );
             pHttpServletRequest.setAttribute( QUIZ_UNDER_CREATION, lStoredQuiz );
-            lCreateQuizForm.setNextPage( NavigateActions.DisplayCreateQuestion
-                    .toString() );
+            lCreateQuizForm.setNextPage( NavigateActions.DisplayCreateQuestion.toString() );
         } else {
-            lCreateQuizForm.setNextPage( NavigateActions.DisplayCreateQuiz
-                    .toString() );
+            lCreateQuizForm.setNextPage( NavigateActions.DisplayCreateQuiz.toString() );
         }
         LOGGER.trace( "ProcessCreateQuiz :: ends" );
-        return pActionMapping.findForward( NavigateActions.DisplayCreateQuiz
-                .toString() );
+        return pActionMapping.findForward( NavigateActions.DisplayCreateQuiz.toString() );
     }
 
     /**
@@ -113,40 +102,38 @@ public class ProcessCreateQuiz extends AhpAbstractProcessAction {
         lQuiz.setQuizStatus( Status.Enabled );
         lQuiz.setAudit( lAudit );
 
+        // Category Definition
         Set<Category> lCategorySet = new HashSet<Category>();
         if ( pCreateQuizForm.getCategory() != null ) {
-            lCategorySet.addAll( lCategorySet );
+            lCategorySet.addAll( pCreateQuizForm.getCategory() );
         }
+        Category lDefaultCategory = new Category();
+        lDefaultCategory.setCategory( "Default" );
+        lCategorySet.add( lDefaultCategory );
         for ( Category lCategory : lCategorySet ) {
             lCategory.setAudit( lAudit );
             lCategory.setQuiz( lQuiz );
         }
-        Category lCategory = new Category();
-        lCategory.setCategory( "Default" );
-        lCategory.setAudit( lAudit );
-        lCategory.setQuiz( lQuiz );
-        lCategorySet.add( lCategory );
-        lQuiz.setCategories( lCategorySet );
 
+        // SkillLevel Definition
         Set<SkillLevel> lSkillLevelSet = new HashSet<SkillLevel>();
         if ( pCreateQuizForm.getSkillLevel() != null ) {
             lSkillLevelSet.addAll( pCreateQuizForm.getSkillLevel() );
         }
+        SkillLevel lDefaultSkillLevel = new SkillLevel();
+        lDefaultSkillLevel.setSkillLevel( "Default" );
+        lSkillLevelSet.add( lDefaultSkillLevel );
         for ( SkillLevel lSkillLevel : lSkillLevelSet ) {
             lSkillLevel.setAudit( lAudit );
             lSkillLevel.setQuiz( lQuiz );
         }
-        SkillLevel lSkillLevel = new SkillLevel();
-        lSkillLevel.setSkillLevel( "Default" );
-        lSkillLevel.setAudit( lAudit );
-        lSkillLevel.setQuiz( lQuiz );
-        lSkillLevelSet.add( lSkillLevel );
-        lQuiz.setSkillLevels( lSkillLevelSet );
 
+        lQuiz.setCategories( lCategorySet );
+        lQuiz.setSkillLevels( lSkillLevelSet );
+        lQuiz.setUser( pLoggedInUser );
         this.mQuizService.createQuiz( lQuiz );
 
-        LOGGER.info( "Created Quiz : " + lQuiz.getQuizName() + " with Id: "
-                + lQuiz.getQuizId() );
+        LOGGER.info( "Created Quiz : " + lQuiz.getQuizName() + " with Id: " + lQuiz.getQuizId() );
         return lQuiz;
     }
 

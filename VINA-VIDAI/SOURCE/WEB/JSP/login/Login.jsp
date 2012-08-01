@@ -15,6 +15,7 @@
 --%>
 
 <%@ include file="/common/TagLibHeader.jsp" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%-- http://css-tricks.com/6206-resolution-specific-stylesheets/
 http://css-tricks.com/video-screencasts/10-fixed-width-fluid-width-elastic-width/
 http://jontangerine.com/log/2007/09/the-incredible-em-and-elastic-layouts-with-css
@@ -24,15 +25,50 @@ http://jontangerine.com/log/2007/09/the-incredible-em-and-elastic-layouts-with-c
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" type="text/css" href="<c:url value='${styleSheet}'/>"/>
         <title>VinaVidai - Login</title>
+        <%@ include file="/common/JQueryUi.jsp" %>
+        <script>
+            $(document).ready(function(){
+                $( "#dialog-form" ).dialog({
+                    autoOpen: false,
+                    height: 450,
+                    width: 450,
+                    modal: true,
+                    resizable :false,
+                    buttons: {
+                        "Create an account": function() {
+                            $( "#registrationForm" ).submit();
+                        },
+                        Cancel: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    },
+                    close: function() {
+                        allFields.val( "" ).removeClass( "ui-state-error" );
+                    }
+                }); //end dialog                                     
+           }); // end document.ready
+           function showRegistrationForm() {
+                $( "#dialog-form" ).dialog( "open" );
+           } 
+        </script>
+        <style>
+            .dialog-block { display:block; }
+            .dialog-text { margin-bottom:5px; width:95%; padding: .4em; }
+            fieldset { padding:0; border:0; margin-top:10px; }
+            .ui-dialog .ui-state-error { padding: .3em; }
+            .validateTips { border: 1px solid transparent; padding: 0.3em; }
+        </style>
     </head>
     <body>
         <div id="rootContainer">
             <div id="bodyContent">
-                
                 <html:form action="${form.processAction}" method="post">
                     <div id="homePageContentBox">
                         <p>
-                           VinaVidai is a open-source Quiz Software intended to be used in home schooling and for academic purposes. VinaVidai is platform independent and and can be integrated with any RDBMS/SQL database compatible with Java. VinaVidai also features with a Embedded database and WebApp server - download and start using right away!
+                           VinaVidai is a open-source Quiz Software intended to be used in home schooling and for academic purposes. VinaVidai is platform independent and and can be integrated with any RDBMS/SQL database compatible with Java. 
+                           <%--
+                           VinaVidai also features with a Embedded database and WebApp server - download and start using right away! (To Do)
+                           --%>
                         </p>
                         <p>
                             VinaVidai has the following features
@@ -87,13 +123,33 @@ http://jontangerine.com/log/2007/09/the-incredible-em-and-elastic-layouts-with-c
                                 value="Login"
                                 styleClass="loginButton"/>
                         </div>
-                        <div class="loginText"><a href="#">Forgot Password?</a></div>
+                        <div class="loginText"><a href="/vinavidai/ForgotPassword.ahp" >Forgot Password?</a></div>
                         <hr/>
                         <br/>
                         <div class="loginTextBold">New Users</div>
-                        <div class="loginText"><a href="#">Register Now</a></div>
+                        <div class="loginText"><a href="#" onclick="showRegistrationForm();">Register Now</a></div>
                     </div>
                 </html:form>
+                <%-- Dialog Form --%>
+                <div id="dialog-form" title="Create new user">
+                    <form:errors path="*" cssClass="ahpError" element="div"/>
+                    <p class="validateTips">All form fields are required.</p>
+                    <form:form method="post" commandName="user" action="RegisterUser.ahp" id="registrationForm">
+	                    <fieldset>
+	                        <label for="firstName" class="dialog-block">First Name</label>
+	                        <input type="text" name="firstName" id="newUserFirstName" class="dialog-block dialog-text ui-widget-content ui-corner-all"/>
+	                        <label for="lastName" class="dialog-block">Last Name</label>
+	                        <input type="text" name="lastName" id="newUserLastName" class="dialog-block dialog-text ui-widget-content ui-corner-all"/>                        
+	                        <label for="loginName" class="dialog-block">Email</label>
+	                        <input type="text" name="loginName" id="loginName" value="" class="dialog-block dialog-text ui-widget-content ui-corner-all"/>
+	                        <label for="password" class="dialog-block">Password</label>
+	                        <input type="password" name="password" id="password" value="" class="dialog-block dialog-text ui-widget-content ui-corner-all"/>
+                            <label for="confirmPassword" class="dialog-block">Confirm Password</label>
+                            <input type="password" name="confirmPassword" id="confirmPassword" value="" class="dialog-block dialog-text ui-widget-content ui-corner-all"/>
+	                    </fieldset>
+                    </form:form>
+                </div>
+                <%-- Dialog Form --%>
             </div>
         </div>
     </body>

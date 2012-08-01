@@ -76,6 +76,19 @@ body {
     background:#e5eec8;
     width:25%;
 }
+
+#registrationBox {
+    padding: 25px 25px 25px 25px;
+    border-style:solid;
+    border-color:#49bf20;
+    border-width:1px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    border-radius: 8px 8px 8px 8px;
+    background:#e5eec8;
+    width:25%;
+}
+
 .loginTextBold{
     font-weight:bold;
     text-align:left;
@@ -353,4 +366,7 @@ body {
     width: 6em;
     font-size: 55%;
     color:#F0F0F0;
+}
+.ahpError { 
+    color: red; 
 }

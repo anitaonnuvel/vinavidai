@@ -57,8 +57,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DisplayEditQuiz extends AhpAbstractDisplayAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( DisplayEditQuiz.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( DisplayEditQuiz.class );
 
     private QuizService mQuizService;
 
@@ -67,16 +66,12 @@ public class DisplayEditQuiz extends AhpAbstractDisplayAction {
     }
 
     @Override
-    public ActionForward display( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward display( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         EditQuizForm lEditQuizForm = ( EditQuizForm ) pActionForm;
-        String lNextPage = StringUtils
-                .trimToEmpty( lEditQuizForm.getNextPage() );
-        ActionForward lActionForward = pActionMapping
-                .findForward( NavigateActions.DisplayEditQuiz.toString() );
+        String lNextPage = StringUtils.trimToEmpty( lEditQuizForm.getNextPage() );
+        ActionForward lActionForward = pActionMapping.findForward( NavigateActions.DisplayEditQuiz.toString() );
         if ( NavigateActions.DisplayEditQuiz.toString().equals( lNextPage ) ) {
             // if ( lEditQuizForm.isSubmitAction( SubmitActions.EMPTY ) )
             // {
@@ -86,47 +81,37 @@ public class DisplayEditQuiz extends AhpAbstractDisplayAction {
                 Category lCategory = new Category();
                 lCategory.setCategory( "" );
                 lCategory.setQuiz( lEditQuizForm.getQuizUnderEdit() );
-                lCategory.setAudit( AhpBusinessDelegate
-                        .createAudit( lLoggedInUser ) );
+                lCategory.setAudit( AhpBusinessDelegate.createAudit( lLoggedInUser ) );
                 lEditQuizForm.getCategory().add( lCategory );
-            } else if ( lEditQuizForm
-                    .isSubmitAction( SubmitActions.DELETE_CATEGORY ) ) {
+            } else if ( lEditQuizForm.isSubmitAction( SubmitActions.DELETE_CATEGORY ) ) {
                 int lDeleteIndex = lEditQuizForm.getHiddenDeleteCategoryIndex();
                 if ( lDeleteIndex != -1 ) {
                     if ( lEditQuizForm.getCategory().size() > lDeleteIndex ) {
-                        lEditQuizForm.getDeleteCategoryIdSet().add(
-                                new Long( lDeleteIndex ) );
+                        lEditQuizForm.getDeleteCategoryIdSet().add( new Long( lDeleteIndex ) );
                         lEditQuizForm.getCategory().remove( lDeleteIndex );
                     }
                 }
-            } else if ( lEditQuizForm
-                    .isSubmitAction( SubmitActions.ADD_SKILL_LEVEL ) ) {
+            } else if ( lEditQuizForm.isSubmitAction( SubmitActions.ADD_SKILL_LEVEL ) ) {
                 SkillLevel lSkillLevel = new SkillLevel();
                 lSkillLevel.setSkillLevel( "" );
                 lSkillLevel.setQuiz( lEditQuizForm.getQuizUnderEdit() );
-                lSkillLevel.setAudit( AhpBusinessDelegate
-                        .createAudit( lLoggedInUser ) );
+                lSkillLevel.setAudit( AhpBusinessDelegate.createAudit( lLoggedInUser ) );
                 lEditQuizForm.getSkillLevel().add( lSkillLevel );
-            } else if ( lEditQuizForm
-                    .isSubmitAction( SubmitActions.DELETE_SKILL_LEVEL ) ) {
-                int lDeleteIndex = lEditQuizForm
-                        .getHiddenDeleteSkillLevelIndex();
+            } else if ( lEditQuizForm.isSubmitAction( SubmitActions.DELETE_SKILL_LEVEL ) ) {
+                int lDeleteIndex = lEditQuizForm.getHiddenDeleteSkillLevelIndex();
                 if ( lDeleteIndex != -1 ) {
                     if ( lEditQuizForm.getSkillLevel().size() > lDeleteIndex ) {
-                        lEditQuizForm.getDeleteSkillLevelIdSet().add(
-                                new Long( lDeleteIndex ) );
+                        lEditQuizForm.getDeleteSkillLevelIdSet().add( new Long( lDeleteIndex ) );
                         lEditQuizForm.getSkillLevel().remove( lDeleteIndex );
                     }
                 }
-            } else if ( lEditQuizForm
-                    .isSubmitAction( SubmitActions.SAVE_CHANGES ) ) {
+            } else if ( lEditQuizForm.isSubmitAction( SubmitActions.SAVE_CHANGES ) ) {
 
             } else {
-                Quiz lManagedQuizUnderEdit = this.mQuizService.loadQuiz(
-                        lEditQuizForm.getQuizUnderEdit().getQuizId(), true );
+                Quiz lManagedQuizUnderEdit = this.mQuizService.loadQuiz( lEditQuizForm.getQuizUnderEdit().getQuizId(),
+                        true );
                 lEditQuizForm.setQuizName( lManagedQuizUnderEdit.getQuizName() );
-                lEditQuizForm.setQuizDescription( lManagedQuizUnderEdit
-                        .getQuizDescription() );
+                lEditQuizForm.setQuizDescription( lManagedQuizUnderEdit.getQuizDescription() );
                 List<Category> categoryList = new ArrayList<Category>();
                 categoryList.addAll( lManagedQuizUnderEdit.getCategories() );
                 lEditQuizForm.setCategory( categoryList );
@@ -134,13 +119,10 @@ public class DisplayEditQuiz extends AhpAbstractDisplayAction {
                 skillLevelList.addAll( lManagedQuizUnderEdit.getSkillLevels() );
                 lEditQuizForm.setSkillLevel( skillLevelList );
             }
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayEditQuiz.toString() );
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayEditQuiz.toString() );
         }
         if ( NavigateActions.DisplayEditQuestion.toString().equals( lNextPage ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayEditQuestion
-                            .toString() );
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayEditQuestion.toString() );
         }
         return lActionForward;
     }

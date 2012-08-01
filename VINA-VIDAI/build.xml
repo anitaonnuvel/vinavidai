@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project basedir="../" 
-         default="project-dist"
+         default="project-dist-local"
          name="VINA-VIDAI"
          xmlns:ac="antlib:net.sf.antcontrib">
     <description>Build file for VINA-VIDAI application</description>
@@ -16,7 +16,7 @@
     <!-- Import dependency jar files -->    
     <import file="dependency.xml"/>
     
-    <target name="project-dist">
+    <target name="project-dist-aws">
         <echo>Hurray! Hurray! Running project-dist for ${ant.project.name}</echo>
         <echo>${ant.project.name}</echo>
         <antcall target="project-clean"/>
@@ -26,10 +26,49 @@
         <antcall target="project-instrument"/>
         -->
         <antcall target="project-jar"/>
-        <antcall target="project-war-tomcat"/>
-        <antcall target="project-deploy-tomcat"/>
+        <antcall target="project-war-tomcat">
+            <param name="${param.distenv.dir.name}" value="${param.distenv.dir.value.aws}"/>
+            <param name="${param.distenv.name}" value="${param.distenv.value.aws}"/>
+            <param name="${param.db.name}" value="mysql"/>
+            <!--
+            <param name="${param.db.name}" value="${param.db.value.h2}"/>
+            <param name="${param.db.name}" value="${param.db.value.hssql}"/>
+            -->
+        </antcall> 
     </target>
 
+    <target name="project-dist-local">
+        <echo>Hurray! Hurray! Running project-dist for ${ant.project.name}</echo>
+        <echo>${ant.project.name}</echo>
+        <antcall target="project-clean"/>
+        <antcall target="project-prepare-build"/>
+        <antcall target="project-compile"/>
+        <!--
+        <antcall target="project-instrument"/>
+        -->
+        <antcall target="project-jar"/>
+        <antcall target="project-war-tomcat">
+            <param name="${param.distenv.dir.name}" value="${param.distenv.dir.value.local}"/>
+            <param name="${param.distenv.name}" value="${param.distenv.value.local}"/>
+            <param name="${param.db.name}" value="${param.db.value.mysql}"/>
+            <!--
+            <param name="${param.db.name}" value="${param.db.value.h2}"/>
+            <param name="${param.db.name}" value="${param.db.value.hssql}"/>
+            -->
+        </antcall>
+        <antcall target="project-deploy-tomcat"/>
+    </target>
+    
+    <target name="project-dist-jetty">
+        <echo>Hurray! Hurray! Running project-dist for ${ant.project.name}</echo>
+        <echo>${ant.project.name}</echo>
+        <antcall target="project-clean"/>
+        <antcall target="project-prepare-build"/>
+        <antcall target="project-compile"/>
+        <antcall target="project-jar"/>
+        <antcall target="project-war-jetty"/>
+    </target>
+    
     <target name="project-test">
         <echo>Hurray! Hurray! Running project-test for ${ant.project.name}</echo>
         <echo>${ant.project.name}</echo>

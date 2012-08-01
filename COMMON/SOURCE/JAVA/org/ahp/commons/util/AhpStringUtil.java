@@ -37,8 +37,7 @@ public class AhpStringUtil {
      * @return
      */
     public static String reflectionToString( Object pObject ) {
-        return ToStringBuilder.reflectionToString( pObject,
-                ToStringStyle.MULTI_LINE_STYLE );
+        return ToStringBuilder.reflectionToString( pObject, ToStringStyle.MULTI_LINE_STYLE );
     }
 
     /**
@@ -57,16 +56,14 @@ public class AhpStringUtil {
      * @param pDelimiter
      * @return
      */
-    public static String listToString( List<String> pListToConvert,
-            String pDelimiter ) {
+    public static String listToString( List<String> pListToConvert, String pDelimiter ) {
         StringBuilder lStringBuilder = new StringBuilder();
         if ( pListToConvert != null ) {
             for ( int i = 0; i < pListToConvert.size(); i++ ) {
                 if ( i == pListToConvert.size() - 1 )
                     lStringBuilder.append( pListToConvert.get( i ) );
                 else
-                    lStringBuilder.append( pListToConvert.get( i ) ).append(
-                            pDelimiter );
+                    lStringBuilder.append( pListToConvert.get( i ) ).append( pDelimiter );
             }
         }
         return lStringBuilder.toString();
@@ -82,16 +79,14 @@ public class AhpStringUtil {
      * @param pDelimiter
      * @return
      */
-    public static String listToQuotedString( List<String> pListToConvert,
-            String pDelimiter ) {
+    public static String listToQuotedString( List<String> pListToConvert, String pDelimiter ) {
         StringBuilder lStringBuilder = new StringBuilder();
         if ( pListToConvert != null ) {
             for ( int i = 0; i < pListToConvert.size(); i++ ) {
                 if ( i == pListToConvert.size() - 1 )
                     lStringBuilder.append( "'" + pListToConvert.get( i ) + "'" );
                 else
-                    lStringBuilder.append( "'" + pListToConvert.get( i ) + "'" )
-                            .append( pDelimiter );
+                    lStringBuilder.append( "'" + pListToConvert.get( i ) + "'" ).append( pDelimiter );
             }
         }
         return lStringBuilder.toString();

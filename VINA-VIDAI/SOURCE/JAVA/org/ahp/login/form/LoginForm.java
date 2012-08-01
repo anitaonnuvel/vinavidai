@@ -29,7 +29,8 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Anita Onnuvel
  * 
- * @struts.form name="LoginForm"
+ * @struts.form
+ *     name="LoginForm"
  */
 public class LoginForm extends AhpAbstractForm {
 
@@ -41,17 +42,14 @@ public class LoginForm extends AhpAbstractForm {
     private String password;
 
     @Override
-    protected void resetForm( ActionMapping pActionMapping,
-            HttpServletRequest pHttpServletRequest ) {
+    protected void resetForm( ActionMapping pActionMapping, HttpServletRequest pHttpServletRequest ) {
     }
 
     @Override
-    public ActionErrors validate( ActionMapping pActionMapping,
-            HttpServletRequest pHttpServletRequest ) {
+    public ActionErrors validate( ActionMapping pActionMapping, HttpServletRequest pHttpServletRequest ) {
         ActionErrors lActionErrors = new ActionErrors();
         String lSubmitAction = StringUtils.trimToNull( this.getSubmitAction() );
-        if ( lSubmitAction != null
-                && SubmitActions.LOGIN.toString().equals( ( lSubmitAction ) ) ) {
+        if ( lSubmitAction != null && SubmitActions.LOGIN.toString().equals( ( lSubmitAction ) ) ) {
             LoginValidator.validateLoginForm( this, lActionErrors );
         }
         return lActionErrors;

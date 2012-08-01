@@ -19,11 +19,13 @@
         <description><![CDATA[]]></description>
     </context-param>
     
+    <!-- SPRING CONTEXT PARAMETER --> 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext-beans.xml /WEB-INF/applicationContext-datasource.xml /WEB-INF/applicationContext-emf.xml /WEB-INF/applicationContext-tx-aop.xml /WEB-INF/applicationContext-tx-advice.xml</param-value>
+        <param-value>/WEB-INF/CONFIG/SPRING/applicationContext-beans.xml /WEB-INF/CONFIG/SPRING/applicationContext-datasource.xml /WEB-INF/CONFIG/SPRING/applicationContext-emf.xml /WEB-INF/CONFIG/SPRING/applicationContext-tx-aop.xml /WEB-INF/CONFIG/SPRING/applicationContext-tx-advice.xml /WEB-INF/CONFIG/SPRING/spring-mvc-servlet.xml /WEB-INF/CONFIG/SPRING/applicationContext-jms.xml /WEB-INF/CONFIG/SPRING/applicationContext-propertyPlaceholder.xml /WEB-INF/CONFIG/WEB-SERVICES/CXF/applicationContext-ws-cxf.xml</param-value>
     </context-param>
-
+    
+    <!-- SPRING LISTENER --> 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -32,32 +34,34 @@
         <filter-name>loginFilter</filter-name>
         <filter-class>org.ahp.filters.LoginFilter</filter-class>
     </filter>
-    
+    <!-- This should be removed --> 
     <filter>
-	    <filter-name>entityManagerInViewFilter</filter-name>
-	    <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-	    <init-param>
-	        <param-name>entityManagerFactoryBeanName</param-name>
-	        <param-value>entityManagerFactory</param-value>
-	    </init-param>
+        <filter-name>entityManagerInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+        <init-param>
+            <param-name>entityManagerFactoryBeanName</param-name>
+            <param-value>entityManagerFactory</param-value>
+        </init-param>
     </filter>
     
     <filter-mapping>
-	    <filter-name>loginFilter</filter-name>
-	    <url-pattern>*.do</url-pattern>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
     </filter-mapping>
     
+    <!-- This should be removed --> 
     <filter-mapping>
-		<filter-name>entityManagerInViewFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+        <filter-name>entityManagerInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!-- STRUTS Servlet --> 
     <servlet>
         <servlet-name>action</servlet-name>
         <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
         <init-param>
             <param-name>config</param-name>
-            <param-value>/WEB-INF/struts-config.xml</param-value>           
+            <param-value>/WEB-INF/CONFIG/STRUTS/struts-config.xml</param-value>           
         </init-param>
         <init-param>
             <param-name>application</param-name>
@@ -70,7 +74,20 @@
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
+    
+    <!-- CXF Servlet -->
+    <servlet>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+    
+    
     <mime-mapping>
         <extension>wsdl</extension>
         <mime-type>text/xml</mime-type>
@@ -80,7 +97,22 @@
         <welcome-file>home.jsp</welcome-file>
     </welcome-file-list>
 
-  <!-- 
+    <servlet>
+        <servlet-name>spring-mvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/CONFIG/SPRING/spring-mvc-servlet.xml</param-value>           
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>spring-mvc</servlet-name>
+        <url-pattern>*.ahp</url-pattern>
+    </servlet-mapping>
+
+    <!-- 
     <error-page>
         <error-code>400</error-code>
         <location>/error.jsp</location>
@@ -90,9 +122,9 @@
         <location>/error.jsp</location>
         <exception-type>java.lang.Exception</exception-type>
     </error-page>
-http://www.coderanch.com/how-to/java/JstlTagLibDefinitions
- -->
-
+    http://www.coderanch.com/how-to/java/JstlTagLibDefinitions
+    -->
+    
     <session-config>
         <session-timeout>240</session-timeout>
     </session-config>

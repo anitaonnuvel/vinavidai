@@ -43,7 +43,8 @@ import org.ahp.vinavidai.enums.Status;
  *         .com/2010/06/hibernate-exception-simultaneously.html
  */
 @Entity
-@Table(name = "QUIZ", schema = "VINAVIDAI")
+//@Table(name = "QUIZ", schema = "VINAVIDAI")
+@Table(name = "QUIZ")
 public class Quiz extends BaseEntity {
     private static final long serialVersionUID = 1L;
 

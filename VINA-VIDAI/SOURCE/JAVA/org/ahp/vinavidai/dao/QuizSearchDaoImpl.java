@@ -39,7 +39,7 @@ import org.ahp.vinavidai.quiz.manage.ManageQuizSortByParams;
  */
 public class QuizSearchDaoImpl implements IQuizSearchDao {
 
-    @PersistenceContext(type = PersistenceContextType.TRANSACTION)
+    @PersistenceContext( type = PersistenceContextType.TRANSACTION )
     private EntityManager mEntityManager;
 
     private static final String SEARCH_QUIZ = "SELECT quizBean FROM Quiz quizBean where quizBean.user.userId = ?1 ORDER BY ";

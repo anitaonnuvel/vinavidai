@@ -18,6 +18,8 @@ package org.ahp.vinavidai.quiz.action;
 import static org.ahp.vinavidai.constants.HttpRequestAttributeConstants.QUIZ_UNDER_PUBLISH;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,8 +68,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ProcessPublishQuiz extends AhpAbstractProcessAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( ProcessPublishQuiz.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( ProcessPublishQuiz.class );
 
     private QuizService mQuizService;
 
@@ -76,39 +77,33 @@ public class ProcessPublishQuiz extends AhpAbstractProcessAction {
     }
 
     @Override
-    public ActionForward process( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward process( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         PublishQuizForm lPublishQuizForm = ( PublishQuizForm ) pActionForm;
-        Quiz lQuizUnderPublish = ( Quiz ) ( pHttpServletRequest
-                .getAttribute( QUIZ_UNDER_PUBLISH ) );
+        Quiz lQuizUnderPublish = ( Quiz ) ( pHttpServletRequest.getAttribute( QUIZ_UNDER_PUBLISH ) );
         if ( lQuizUnderPublish != null ) {
-            lPublishQuizForm.setNextPage( NavigateActions.DisplayPublishQuiz
-                    .toString() );
+            lPublishQuizForm.setNextPage( NavigateActions.DisplayPublishQuiz.toString() );
             lPublishQuizForm.setQuizUnderPublish( lQuizUnderPublish );
-        } else if ( lPublishQuizForm
-                .isSubmitAction( SubmitActions.PUBLISH_QUIZ ) ) {
-            Test lTest = this
-                    .storePublishQuiz( lPublishQuizForm, lLoggedInUser );
+        } else if ( lPublishQuizForm.isSubmitAction( SubmitActions.PUBLISH_QUIZ ) ) {
+            Test lTest = this.storePublishQuiz( lPublishQuizForm, lLoggedInUser );
             try {
-                lPublishQuizForm
-                        .setTestPublishUrl( "http://localhost:8080/vinavidai/TakeTest.do?accessKey="
-                                + URLEncoder.encode( lTest.getTestAccessKey(),
-                                        "UTF-8" ) );
+                URI lRequestUri = new URI( pHttpServletRequest.getRequestURL().toString() );
+                lRequestUri.getScheme();
+                URI lNewUri = new URI( lRequestUri.getScheme(), lRequestUri.getAuthority(), "TakeTest.do", "accessKey="
+                        + URLEncoder.encode( lTest.getTestAccessKey(), "UTF-8" ), "" );
+                lPublishQuizForm.setTestPublishUrl( "http://localhost:8080/vinavidai/TakeTest.do?accessKey="
+                        + URLEncoder.encode( lTest.getTestAccessKey(), "UTF-8" ) );
             } catch ( UnsupportedEncodingException exUnsupportedEncoding ) {
                 LOGGER.error( "", exUnsupportedEncoding );
+            } catch ( URISyntaxException exURISyntax ) {
+                LOGGER.error( "", exURISyntax );
             }
-            lPublishQuizForm
-                    .setNextPage( NavigateActions.DisplayPublishQuizConfirmation
-                            .toString() );
+            lPublishQuizForm.setNextPage( NavigateActions.DisplayPublishQuizConfirmation.toString() );
         } else {
-            lPublishQuizForm.setNextPage( NavigateActions.DisplayPublishQuiz
-                    .toString() );
+            lPublishQuizForm.setNextPage( NavigateActions.DisplayPublishQuiz.toString() );
         }
-        return pActionMapping.findForward( NavigateActions.DisplayPublishQuiz
-                .toString() );
+        return pActionMapping.findForward( NavigateActions.DisplayPublishQuiz.toString() );
     }
 
     /**
@@ -117,56 +112,42 @@ public class ProcessPublishQuiz extends AhpAbstractProcessAction {
      * @return
      * @throws Exception
      */
-    private Test storePublishQuiz( PublishQuizForm pPublishQuizForm,
-            User pLoggedInUser ) {
+    private Test storePublishQuiz( PublishQuizForm pPublishQuizForm, User pLoggedInUser ) {
         Audit lAudit = AhpBusinessDelegate.createAudit( pLoggedInUser );
         Test lTest = new Test();
         lTest.setTestName( pPublishQuizForm.getTestName() );
         lTest.setTestDescription( pPublishQuizForm.getTestDescription() );
-        if ( pPublishQuizForm.getTestDurationType().equals(
-                DurationType.Timed.toString() ) ) {
+        if ( pPublishQuizForm.getTestDurationType().equals( DurationType.Timed.toString() ) ) {
             Calendar lQuizDurationCalendar = Calendar.getInstance();
-            lQuizDurationCalendar
-                    .set( Calendar.HOUR_OF_DAY,
-                            Integer.parseInt( pPublishQuizForm
-                                    .getFixedDurationHours() ) );
-            lQuizDurationCalendar.set( Calendar.MINUTE, Integer
-                    .parseInt( pPublishQuizForm.getFixedDurationMinutes() ) );
+            lQuizDurationCalendar.set( Calendar.HOUR_OF_DAY,
+                    Integer.parseInt( pPublishQuizForm.getFixedDurationHours() ) );
+            lQuizDurationCalendar.set( Calendar.MINUTE, Integer.parseInt( pPublishQuizForm.getFixedDurationMinutes() ) );
             lTest.setTestDuration( lQuizDurationCalendar.getTime() );
         } else {
             lTest.setTestDuration( null );
         }
-        if ( pPublishQuizForm.getResponseDurationPerQuestionType().equals(
-                DurationType.Timed.toString() ) ) {
+        if ( pPublishQuizForm.getResponseDurationPerQuestionType().equals( DurationType.Timed.toString() ) ) {
             Calendar lQuestionDurationCalendar = Calendar.getInstance();
-            lQuestionDurationCalendar.set( Calendar.HOUR_OF_DAY, Integer
-                    .parseInt( pPublishQuizForm
-                            .getResponseDurationPerQuestionHours() ) );
-            lQuestionDurationCalendar.set( Calendar.MINUTE, Integer
-                    .parseInt( pPublishQuizForm
-                            .getResponseDurationPerQuestionMinutes() ) );
-            lQuestionDurationCalendar.set( Calendar.SECOND, Integer
-                    .parseInt( pPublishQuizForm
-                            .getResponseDurationPerQuestionSeconds() ) );
+            lQuestionDurationCalendar.set( Calendar.HOUR_OF_DAY,
+                    Integer.parseInt( pPublishQuizForm.getResponseDurationPerQuestionHours() ) );
+            lQuestionDurationCalendar.set( Calendar.MINUTE,
+                    Integer.parseInt( pPublishQuizForm.getResponseDurationPerQuestionMinutes() ) );
+            lQuestionDurationCalendar.set( Calendar.SECOND,
+                    Integer.parseInt( pPublishQuizForm.getResponseDurationPerQuestionSeconds() ) );
             lTest.setQuestionDuration( lQuestionDurationCalendar.getTime() );
         } else {
             lTest.setQuestionDuration( null );
         }
-        if ( pPublishQuizForm.getTestAccessTimeType().equals(
-                DurationType.Timed.toString() ) ) {
-            SimpleDateFormat lDateTimeFormatter = new SimpleDateFormat(
-                    "MM/dd/yyyy H:m" );
+        if ( pPublishQuizForm.getTestAccessTimeType().equals( DurationType.Timed.toString() ) ) {
+            SimpleDateFormat lDateTimeFormatter = new SimpleDateFormat( "MM/dd/yyyy H:m" );
             try {
-                lTest.setTestAccessStartTime( lDateTimeFormatter
-                        .parse( pPublishQuizForm.getTestAccessStartTime() ) );
-                lTest.setTestAccessEndTime( lDateTimeFormatter
-                        .parse( pPublishQuizForm.getTestAccessEndTime() ) );
+                lTest.setTestAccessStartTime( lDateTimeFormatter.parse( pPublishQuizForm.getTestAccessStartTime() ) );
+                lTest.setTestAccessEndTime( lDateTimeFormatter.parse( pPublishQuizForm.getTestAccessEndTime() ) );
             } catch ( ParseException exParse ) {
                 throw new RuntimeException();
             }
         }
-        lTest.setTestPassPercentile( Integer.parseInt( pPublishQuizForm
-                .getTestPassPercentile() ) );
+        lTest.setTestPassPercentile( Integer.parseInt( pPublishQuizForm.getTestPassPercentile() ) );
         lTest.setTestStatus( Status.Enabled );
         lTest.setAudit( lAudit );
 
@@ -174,28 +155,23 @@ public class ProcessPublishQuiz extends AhpAbstractProcessAction {
         Set<TestConfig> lQuizConfigSet = new LinkedHashSet<TestConfig>();
 
         TestConfig lQuestionListStyleConfig = new TestConfig();
-        lQuestionListStyleConfig
-                .setConfigName( QuizConfigEnum.QuestionListStyle.toString() );
-        lQuestionListStyleConfig.setConfigValue( pPublishQuizForm
-                .getSelectedListStyle() );
+        lQuestionListStyleConfig.setConfigName( QuizConfigEnum.QuestionListStyle.toString() );
+        lQuestionListStyleConfig.setConfigValue( pPublishQuizForm.getSelectedListStyle() );
         lQuestionListStyleConfig.setAudit( lAudit );
         lQuestionListStyleConfig.setTest( lTest );
         lQuizConfigSet.add( lQuestionListStyleConfig );
 
         TestConfig lQuestionDisplayStyleConfig = new TestConfig();
-        lQuestionDisplayStyleConfig
-                .setConfigName( QuizConfigEnum.QuestionDisplayStyle.toString() );
-        lQuestionDisplayStyleConfig.setConfigValue( pPublishQuizForm
-                .getSelectedDisplayStyle() );
+        lQuestionDisplayStyleConfig.setConfigName( QuizConfigEnum.QuestionDisplayStyle.toString() );
+        lQuestionDisplayStyleConfig.setConfigValue( pPublishQuizForm.getSelectedDisplayStyle() );
         lQuestionDisplayStyleConfig.setAudit( lAudit );
         lQuestionDisplayStyleConfig.setTest( lTest );
         lQuizConfigSet.add( lQuestionDisplayStyleConfig );
 
-        String lTestAccessKey = AhpMessageDigest.createDigest( lTest
-                .getTestName() );
+        String lTestAccessKey = AhpMessageDigest.createDigest( lTest.getTestName() );
         lTest.setTestConfig( lQuizConfigSet );
         lTest.setTestAccessKey( lTestAccessKey );
-
+        lTest.setQuiz( pPublishQuizForm.getQuizUnderPublish() );
         this.mQuizService.createPublishQuiz( lTest );
         pPublishQuizForm.setTest( lTest );
         LOGGER.debug( "Publishd Quiz with Id: " + lTest.getTestId() );

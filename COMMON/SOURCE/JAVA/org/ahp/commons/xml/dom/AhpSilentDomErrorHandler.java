@@ -29,8 +29,7 @@ import org.w3c.dom.Node;
  */
 public class AhpSilentDomErrorHandler implements DOMErrorHandler {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpSilentDomErrorHandler.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpSilentDomErrorHandler.class );
 
     @Override
     public boolean handleError( DOMError pDOMError ) {
@@ -53,8 +52,7 @@ public class AhpSilentDomErrorHandler implements DOMErrorHandler {
         if ( pDOMError.getLocation() != null ) {
             DOMLocator lDOMLocator = pDOMError.getLocation();
             lStringBuilder.append( " at line# " + lDOMLocator.getLineNumber() );
-            lStringBuilder.append( " at Column# "
-                    + lDOMLocator.getColumnNumber() );
+            lStringBuilder.append( " at Column# " + lDOMLocator.getColumnNumber() );
             lStringBuilder.append( " , " + lDOMLocator.getByteOffset() );
             Node lRelatedNode = lDOMLocator.getRelatedNode();
             if ( lRelatedNode != null ) {

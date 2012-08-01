@@ -29,10 +29,15 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Anita Onnuvel
  * 
- * @struts.action path="/ProcessLogout" scope="session" validate="false"
+ * @struts.action 
+ *     path="/ProcessLogout" 
+ *     scope="session" 
+ *     validate="false"
  * 
- * @struts.action-forward name="ProcessLogin" path="/ProcessLogin.do"
- *                        redirect="false"
+ * @struts.action-forward 
+ *     name="ProcessLogin" 
+ *     path="/ProcessLogin.do"
+ *     redirect="false"
  * 
  * 
  */
@@ -41,11 +46,11 @@ public class ProcessLogout extends AhpAbstractProcessAction {
     final static Logger LOGGER = LoggerFactory.getLogger( ProcessLogout.class );
 
     @Override
-    public ActionForward process( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
+    public ActionForward process( ActionMapping pActionMapping, 
+                                  ActionForm pActionForm,
+                                  HttpServletRequest pHttpServletRequest, 
+                                  HttpServletResponse pHttpServletResponse ) {
         pHttpServletRequest.getSession().invalidate();
-        return pActionMapping.findForward( NavigateActions.ProcessLogin
-                .toString() );
+        return pActionMapping.findForward( NavigateActions.ProcessLogin.toString() );
     }
 }

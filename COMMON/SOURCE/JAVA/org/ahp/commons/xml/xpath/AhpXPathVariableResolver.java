@@ -34,8 +34,7 @@ public class AhpXPathVariableResolver implements XPathVariableResolver {
     /**
      * DOCUMENT ME!
      */
-    public void addVariable( String pNamespaceURI, String pLocalName,
-            Object pValue ) {
+    public void addVariable( String pNamespaceURI, String pLocalName, Object pValue ) {
         addVariable( new QName( pNamespaceURI, pLocalName ), pValue );
     }
 

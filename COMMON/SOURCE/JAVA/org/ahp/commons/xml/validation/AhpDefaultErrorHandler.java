@@ -29,8 +29,7 @@ import org.xml.sax.SAXParseException;
 public class AhpDefaultErrorHandler implements ErrorHandler {
 
     /** The Constant LOGGER. */
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpDefaultErrorHandler.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpDefaultErrorHandler.class );
 
     /*
      * (non-Javadoc)
@@ -55,8 +54,7 @@ public class AhpDefaultErrorHandler implements ErrorHandler {
      * 
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
-    public void fatalError( SAXParseException pSAXParseException )
-            throws SAXException {
+    public void fatalError( SAXParseException pSAXParseException ) throws SAXException {
         throw pSAXParseException;
     }
 

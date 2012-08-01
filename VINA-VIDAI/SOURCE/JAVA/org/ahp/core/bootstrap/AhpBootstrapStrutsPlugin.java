@@ -72,29 +72,22 @@ public class AhpBootstrapStrutsPlugin implements PlugIn {
     /**
      * 
      */
-    public void init( ActionServlet pActionServlet, ModuleConfig pModuleConfig )
-            throws ServletException {
+    public void init( ActionServlet pActionServlet, ModuleConfig pModuleConfig ) throws ServletException {
         System.out.println( "Initializing AhpBootstrapStrutsPlugin" );
         try {
-            String lRealPath = pActionServlet.getServletContext().getRealPath(
-                    "/" );
-            System.out.println( "ConfigurationFiles - "
-                    + this.getAhpConfigurationLocation() );
+            String lRealPath = pActionServlet.getServletContext().getRealPath( "/" );
+            System.out.println( "ConfigurationFiles - " + this.getAhpConfigurationLocation() );
             WebApplicationContext lWebApplicationContext = WebApplicationContextUtils
-                    .getWebApplicationContext( pActionServlet
-                            .getServletContext() );
-            String lBeanName = StringUtils.trimToEmpty( this
-                    .getAhpBootstrapManagerBeanId() );
+                    .getWebApplicationContext( pActionServlet.getServletContext() );
+            String lBeanName = StringUtils.trimToEmpty( this.getAhpBootstrapManagerBeanId() );
             if ( lBeanName == null ) {
                 lBeanName = DEFAULT_AHP_BOOTSTRAP_MANAGER_BEAN_ID;
             }
             IAhpBootstrapManager lAhpBootstrapManager = ( IAhpBootstrapManager ) lWebApplicationContext
                     .getBean( lBeanName );
             if ( lAhpBootstrapManager == null )
-                lAhpBootstrapManager = lWebApplicationContext
-                        .getBean( IAhpBootstrapManager.class );
-            lAhpBootstrapManager.bootstrap( this.getAhpConfigurationLocation()
-                    .split( "," ), lRealPath );
+                lAhpBootstrapManager = lWebApplicationContext.getBean( IAhpBootstrapManager.class );
+            lAhpBootstrapManager.bootstrap( this.getAhpConfigurationLocation().split( "," ), lRealPath );
         } catch ( AhpRuntimeException exAhpRuntime ) {
             throw exAhpRuntime;
         } catch ( Exception ex ) {

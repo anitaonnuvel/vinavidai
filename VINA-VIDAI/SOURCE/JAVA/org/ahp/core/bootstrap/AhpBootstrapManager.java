@@ -39,8 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AhpBootstrapManager implements IAhpBootstrapManager {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpBootstrapManager.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpBootstrapManager.class );
 
     private String[] mAhpConfigFileLocation;
     private AhpConfiguration mAhpConfiguration;
@@ -48,8 +47,7 @@ public class AhpBootstrapManager implements IAhpBootstrapManager {
     private IAhpLoggerManager mAhpLoggerManager;
     private IAhpMessageResourceManager mAhpResourceBundleManager;
 
-    public void setAhpConfigurationManager(
-            IAhpConfigurationManager pAhpConfigurationManager ) {
+    public void setAhpConfigurationManager( IAhpConfigurationManager pAhpConfigurationManager ) {
         this.mAhpConfigurationManager = pAhpConfigurationManager;
     }
 
@@ -57,8 +55,7 @@ public class AhpBootstrapManager implements IAhpBootstrapManager {
         this.mAhpLoggerManager = pAhpLoggerManager;
     }
 
-    public void setAhpMessageResourceManager(
-            IAhpMessageResourceManager pAhpResourceBundleManager ) {
+    public void setAhpMessageResourceManager( IAhpMessageResourceManager pAhpResourceBundleManager ) {
         this.mAhpResourceBundleManager = pAhpResourceBundleManager;
     }
 
@@ -70,8 +67,7 @@ public class AhpBootstrapManager implements IAhpBootstrapManager {
     public void bootstrap( String[] pAhpConfigFileResourceUri, String pRealPath ) {
         this.mAhpConfigFileLocation = pAhpConfigFileResourceUri;
         this.mAhpConfigurationManager.init( null );
-        this.mAhpConfiguration = mAhpConfigurationManager.configure(
-                mAhpConfigFileLocation, pRealPath );
+        this.mAhpConfiguration = mAhpConfigurationManager.configure( mAhpConfigFileLocation, pRealPath );
         this.init( mAhpConfiguration );
         this.start();
     }

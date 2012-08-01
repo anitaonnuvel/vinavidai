@@ -53,8 +53,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DisplayPublishQuiz extends AhpAbstractDisplayAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( DisplayPublishQuiz.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( DisplayPublishQuiz.class );
 
     private QuizService mQuizService;
 
@@ -63,44 +62,29 @@ public class DisplayPublishQuiz extends AhpAbstractDisplayAction {
     }
 
     @Override
-    public ActionForward display( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
+    public ActionForward display( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
         PublishQuizForm lPublishQuizForm = ( PublishQuizForm ) pActionForm;
-        ActionForward lActionForward = pActionMapping
-                .findForward( NavigateActions.DisplayPublishQuiz.toString() );
+        ActionForward lActionForward = pActionMapping.findForward( NavigateActions.DisplayPublishQuiz.toString() );
         if ( lPublishQuizForm.isNextPage( NavigateActions.DisplayPublishQuiz ) ) {
             lPublishQuizForm.setHoursDisplaySet( AhpTimeUtil.getHourInDay() );
             lPublishQuizForm.setMinutesDisplaySet( AhpTimeUtil.getMinutes() );
             lPublishQuizForm.setSecondsDisplaySet( AhpTimeUtil.getSeconds() );
             lPublishQuizForm.setListStyleSet( EnumWrapper.enumerateListStyle() );
-            lPublishQuizForm.setDisplayStyleSet( EnumWrapper
-                    .enumerateDisplayStyle() );
-            lPublishQuizForm.setTestDurationType( DurationType.Indefinite
-                    .toString() );
-            lPublishQuizForm
-                    .setResponseDurationPerQuestionType( DurationType.Indefinite
-                            .toString() );
-            lPublishQuizForm.setTestAccessTimeType( DurationType.Indefinite
-                    .toString() );
-            lPublishQuizForm
-                    .setSelectedListStyle( ListStyle.Numeric.toString() );
-            lPublishQuizForm.setSelectedDisplayStyle( DisplayStyle.Dot
-                    .toString() );
-            lPublishQuizForm.setTestPassPercentile( ""
-                    + DEFAULT_PASS_PERCENTILE );
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayPublishQuiz.toString() );
+            lPublishQuizForm.setDisplayStyleSet( EnumWrapper.enumerateDisplayStyle() );
+            lPublishQuizForm.setTestDurationType( DurationType.Indefinite.toString() );
+            lPublishQuizForm.setResponseDurationPerQuestionType( DurationType.Indefinite.toString() );
+            lPublishQuizForm.setTestAccessTimeType( DurationType.Indefinite.toString() );
+            lPublishQuizForm.setSelectedListStyle( ListStyle.Numeric.toString() );
+            lPublishQuizForm.setSelectedDisplayStyle( DisplayStyle.Dot.toString() );
+            lPublishQuizForm.setTestPassPercentile( "" + DEFAULT_PASS_PERCENTILE );
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayPublishQuiz.toString() );
         }
         if ( lPublishQuizForm.isNextPage( NavigateActions.DisplayPublishQuiz ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayPublishQuiz.toString() );
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayPublishQuiz.toString() );
         }
-        if ( lPublishQuizForm
-                .isNextPage( NavigateActions.DisplayPublishQuizConfirmation ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayPublishQuizConfirmation
-                            .toString() );
+        if ( lPublishQuizForm.isNextPage( NavigateActions.DisplayPublishQuizConfirmation ) ) {
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayPublishQuizConfirmation.toString() );
         }
         return lActionForward;
     }

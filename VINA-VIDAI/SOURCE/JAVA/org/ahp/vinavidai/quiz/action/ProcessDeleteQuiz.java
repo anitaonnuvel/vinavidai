@@ -50,8 +50,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ProcessDeleteQuiz extends AhpAbstractProcessAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( ProcessDeleteQuiz.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( ProcessDeleteQuiz.class );
 
     private QuizService mQuizService;
 
@@ -60,33 +59,23 @@ public class ProcessDeleteQuiz extends AhpAbstractProcessAction {
     }
 
     @Override
-    public ActionForward process( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward process( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         ManageQuizForm lDeleteQuizForm = ( ManageQuizForm ) pActionForm;
-        String lSubmitAction = StringUtils.trimToEmpty( lDeleteQuizForm
-                .getSubmitAction() );
-        if ( lDeleteQuizForm
-                .isSubmitAction( SubmitActions.RETURN_TO_MANAGE_QUIZ ) ) {
-            lDeleteQuizForm.getPaginationData().setOperation(
-                    PaginationOperations.ComboSubmit.toString() );
+        String lSubmitAction = StringUtils.trimToEmpty( lDeleteQuizForm.getSubmitAction() );
+        if ( lDeleteQuizForm.isSubmitAction( SubmitActions.RETURN_TO_MANAGE_QUIZ ) ) {
+            lDeleteQuizForm.getPaginationData().setOperation( PaginationOperations.ComboSubmit.toString() );
             lDeleteQuizForm.getPaginationData().setHiddenSelectedComboValue(
                     lDeleteQuizForm.getPaginationData().getSelectedPage() );
-            lDeleteQuizForm.setNextPage( NavigateActions.DisplayManageQuiz
-                    .toString() );
-        } else if ( lDeleteQuizForm
-                .isSubmitAction( SubmitActions.CONFIRM_DELETE ) ) {
+            lDeleteQuizForm.setNextPage( NavigateActions.DisplayManageQuiz.toString() );
+        } else if ( lDeleteQuizForm.isSubmitAction( SubmitActions.CONFIRM_DELETE ) ) {
             this.deleteQuiz( lDeleteQuizForm, lLoggedInUser );
-            lDeleteQuizForm.setNextPage( NavigateActions.DisplayManageQuiz
-                    .toString() );
+            lDeleteQuizForm.setNextPage( NavigateActions.DisplayManageQuiz.toString() );
         } else {
-            lDeleteQuizForm.setNextPage( NavigateActions.DisplayDeleteQuiz
-                    .toString() );
+            lDeleteQuizForm.setNextPage( NavigateActions.DisplayDeleteQuiz.toString() );
         }
-        return pActionMapping.findForward( NavigateActions.DisplayDeleteQuiz
-                .toString() );
+        return pActionMapping.findForward( NavigateActions.DisplayDeleteQuiz.toString() );
     }
 
     /**

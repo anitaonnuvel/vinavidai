@@ -30,8 +30,7 @@ import org.slf4j.LoggerFactory;
 final class AhpDatabaseConfigurationManager implements IAhpConfigurationManager {
 
     /** DOCUMENT ME! */
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpDatabaseConfigurationManager.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpDatabaseConfigurationManager.class );
 
     @PersistenceContext
     private EntityManager mEntityManager;
@@ -56,8 +55,7 @@ final class AhpDatabaseConfigurationManager implements IAhpConfigurationManager 
      * DOCUMENT ME!
      */
     @Override
-    public AhpConfiguration configure( String[] pResourceUriArray,
-            String pRealPath ) {
+    public AhpConfiguration configure( String[] pResourceUriArray, String pRealPath ) {
         AhpConfiguration lAhpConfiguration = new AhpConfiguration();
         return lAhpConfiguration;
         /*

@@ -58,27 +58,17 @@ public final class AhpDomLevel3LS {
     public static Node loadNodeFromUri( String pXmlResourceUri ) {
         try {
             if ( AhpResourceUtil.isClassPathResource( pXmlResourceUri ) ) {
-                pXmlResourceUri = AhpResourceUtil
-                        .getClassPathResourceAsFileResource( pXmlResourceUri );
+                pXmlResourceUri = AhpResourceUtil.getClassPathResourceAsFileResource( pXmlResourceUri );
             }
-            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry
-                    .newInstance();
+            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry.newInstance();
             DOMImplementationLS lDOMImplementationLS = ( DOMImplementationLS ) lDOMImplementationRegistry
                     .getDOMImplementation( LS_IMPLEMENTATION );
-            LSParser lLSParser = lDOMImplementationLS.createLSParser(
-                    DOMImplementationLS.MODE_SYNCHRONOUS, null );
-            lLSParser.getDomConfig().setParameter( ERROR_HANDLER,
-                    new AhpSilentDomErrorHandler() );
+            LSParser lLSParser = lDOMImplementationLS.createLSParser( DOMImplementationLS.MODE_SYNCHRONOUS, null );
+            lLSParser.getDomConfig().setParameter( ERROR_HANDLER, new AhpSilentDomErrorHandler() );
             Document lDocument = lLSParser.parseURI( pXmlResourceUri );
             return ( Node ) lDocument;
-        } catch ( ClassCastException exClassCast ) {
-            throw new AhpRuntimeException( "", exClassCast );
-        } catch ( ClassNotFoundException exClassNotFound ) {
-            throw new AhpRuntimeException( "", exClassNotFound );
-        } catch ( InstantiationException exInstantiation ) {
-            throw new AhpRuntimeException( "", exInstantiation );
-        } catch ( IllegalAccessException exIllegalAccess ) {
-            throw new AhpRuntimeException( "", exIllegalAccess );
+        } catch ( ClassCastException | ClassNotFoundException | InstantiationException | IllegalAccessException ex ) {
+            throw new AhpRuntimeException( "", ex );
         }
     }
 
@@ -89,26 +79,17 @@ public final class AhpDomLevel3LS {
      */
     public static Node loadNodeFromStream( InputStream pXmlInputStream ) {
         try {
-            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry
-                    .newInstance();
+            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry.newInstance();
             DOMImplementationLS lDOMImplementationLS = ( DOMImplementationLS ) lDOMImplementationRegistry
                     .getDOMImplementation( LS_IMPLEMENTATION );
-            LSParser lLSParser = lDOMImplementationLS.createLSParser(
-                    DOMImplementationLS.MODE_SYNCHRONOUS, null );
-            lLSParser.getDomConfig().setParameter( ERROR_HANDLER,
-                    new AhpSilentDomErrorHandler() );
+            LSParser lLSParser = lDOMImplementationLS.createLSParser( DOMImplementationLS.MODE_SYNCHRONOUS, null );
+            lLSParser.getDomConfig().setParameter( ERROR_HANDLER, new AhpSilentDomErrorHandler() );
             LSInput lLSInput = lDOMImplementationLS.createLSInput();
             lLSInput.setByteStream( pXmlInputStream );
             Document lDocument = lLSParser.parse( lLSInput );
             return ( Node ) lDocument;
-        } catch ( ClassCastException exClassCast ) {
-            throw new AhpRuntimeException( "", exClassCast );
-        } catch ( ClassNotFoundException exClassNotFound ) {
-            throw new AhpRuntimeException( "", exClassNotFound );
-        } catch ( InstantiationException exInstantiation ) {
-            throw new AhpRuntimeException( "", exInstantiation );
-        } catch ( IllegalAccessException exIllegalAccess ) {
-            throw new AhpRuntimeException( "", exIllegalAccess );
+        } catch ( ClassCastException | ClassNotFoundException | InstantiationException | IllegalAccessException ex ) {
+            throw new AhpRuntimeException( "", ex );
         }
     }
 
@@ -119,26 +100,17 @@ public final class AhpDomLevel3LS {
      */
     public static Node loadNodeFromString( String pXmlString ) {
         try {
-            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry
-                    .newInstance();
+            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry.newInstance();
             DOMImplementationLS lDOMImplementationLS = ( DOMImplementationLS ) lDOMImplementationRegistry
                     .getDOMImplementation( LS_IMPLEMENTATION );
-            LSParser lLSParser = lDOMImplementationLS.createLSParser(
-                    DOMImplementationLS.MODE_SYNCHRONOUS, null );
-            lLSParser.getDomConfig().setParameter( ERROR_HANDLER,
-                    new AhpSilentDomErrorHandler() );
+            LSParser lLSParser = lDOMImplementationLS.createLSParser( DOMImplementationLS.MODE_SYNCHRONOUS, null );
+            lLSParser.getDomConfig().setParameter( ERROR_HANDLER, new AhpSilentDomErrorHandler() );
             LSInput lLSInput = lDOMImplementationLS.createLSInput();
             lLSInput.setStringData( pXmlString );
             Document lDocument = lLSParser.parse( lLSInput );
             return ( Node ) lDocument;
-        } catch ( ClassCastException exClassCast ) {
-            throw new AhpRuntimeException( "", exClassCast );
-        } catch ( ClassNotFoundException exClassNotFound ) {
-            throw new AhpRuntimeException( "", exClassNotFound );
-        } catch ( InstantiationException exInstantiation ) {
-            throw new AhpRuntimeException( "", exInstantiation );
-        } catch ( IllegalAccessException exIllegalAccess ) {
-            throw new AhpRuntimeException( "", exIllegalAccess );
+        } catch ( ClassCastException | ClassNotFoundException | InstantiationException | IllegalAccessException ex ) {
+            throw new AhpRuntimeException( "", ex );
         }
     }
 
@@ -149,16 +121,12 @@ public final class AhpDomLevel3LS {
      */
     public static String saveNodeToString( Node pNode ) {
         try {
-            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry
-                    .newInstance();
+            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry.newInstance();
             DOMImplementationLS lDOMImplementationLS = ( DOMImplementationLS ) lDOMImplementationRegistry
                     .getDOMImplementation( LS_IMPLEMENTATION );
-            LSSerializer lLSSerializer = lDOMImplementationLS
-                    .createLSSerializer();
-            if ( lLSSerializer.getDomConfig().canSetParameter(
-                    FORMAT_PRETTY_PRINT, Boolean.TRUE ) ) {
-                lLSSerializer.getDomConfig().setParameter( FORMAT_PRETTY_PRINT,
-                        Boolean.TRUE );
+            LSSerializer lLSSerializer = lDOMImplementationLS.createLSSerializer();
+            if ( lLSSerializer.getDomConfig().canSetParameter( FORMAT_PRETTY_PRINT, Boolean.TRUE ) ) {
+                lLSSerializer.getDomConfig().setParameter( FORMAT_PRETTY_PRINT, Boolean.TRUE );
             }
             LSOutput lLSOutput = lDOMImplementationLS.createLSOutput();
             lLSOutput.setEncoding( LS_OUTPUT_ENCODING );
@@ -166,14 +134,8 @@ public final class AhpDomLevel3LS {
             lLSOutput.setCharacterStream( lStringWriter );
             lLSSerializer.write( pNode, lLSOutput );
             return lStringWriter.toString();
-        } catch ( ClassCastException exClassCast ) {
-            throw new AhpRuntimeException( "", exClassCast );
-        } catch ( ClassNotFoundException exClassNotFound ) {
-            throw new AhpRuntimeException( "", exClassNotFound );
-        } catch ( InstantiationException exInstantiation ) {
-            throw new AhpRuntimeException( "", exInstantiation );
-        } catch ( IllegalAccessException exIllegalAccess ) {
-            throw new AhpRuntimeException( "", exIllegalAccess );
+        } catch ( ClassCastException | ClassNotFoundException | InstantiationException | IllegalAccessException ex ) {
+            throw new AhpRuntimeException( "", ex );
         }
     }
 
@@ -184,28 +146,18 @@ public final class AhpDomLevel3LS {
      */
     public static void saveNodeToFile( Node pNode, String pSystemId ) {
         try {
-            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry
-                    .newInstance();
+            DOMImplementationRegistry lDOMImplementationRegistry = DOMImplementationRegistry.newInstance();
             DOMImplementationLS lDOMImplementationLS = ( DOMImplementationLS ) lDOMImplementationRegistry
                     .getDOMImplementation( LS_IMPLEMENTATION );
-            LSSerializer lLSSerializer = lDOMImplementationLS
-                    .createLSSerializer();
-            if ( lLSSerializer.getDomConfig().canSetParameter(
-                    FORMAT_PRETTY_PRINT, Boolean.TRUE ) ) {
-                lLSSerializer.getDomConfig().setParameter( FORMAT_PRETTY_PRINT,
-                        Boolean.TRUE );
+            LSSerializer lLSSerializer = lDOMImplementationLS.createLSSerializer();
+            if ( lLSSerializer.getDomConfig().canSetParameter( FORMAT_PRETTY_PRINT, Boolean.TRUE ) ) {
+                lLSSerializer.getDomConfig().setParameter( FORMAT_PRETTY_PRINT, Boolean.TRUE );
             }
             LSOutput lLSOutput = lDOMImplementationLS.createLSOutput();
             lLSOutput.setSystemId( pSystemId );
             lLSSerializer.write( pNode, lLSOutput );
-        } catch ( ClassCastException exClassCast ) {
-            throw new AhpRuntimeException( "", exClassCast );
-        } catch ( ClassNotFoundException exClassNotFound ) {
-            throw new AhpRuntimeException( "", exClassNotFound );
-        } catch ( InstantiationException exInstantiation ) {
-            throw new AhpRuntimeException( "", exInstantiation );
-        } catch ( IllegalAccessException exIllegalAccess ) {
-            throw new AhpRuntimeException( "", exIllegalAccess );
+        } catch ( ClassCastException | ClassNotFoundException | InstantiationException | IllegalAccessException ex ) {
+            throw new AhpRuntimeException( "", ex );
         }
     }
 }

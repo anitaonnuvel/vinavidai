@@ -24,8 +24,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MapKey;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.ahp.commons.util.AhpStringUtil;
 import org.ahp.vinavidai.pojo.QuizGroup;
@@ -36,13 +38,18 @@ import org.ahp.vinavidai.pojo.QuizGroup;
  * 
  */
 @Entity
-@Table(name = "USER", schema = "VINAVIDAI")
+//@Table( name = "USER", schema = "VINAVIDAI" )
+@Table( name = "USER" )
+@NamedQuery(name = "doesUserExist", query = "SELECT userBean FROM User userBean WHERE userBean.loginName LIKE :registrationName")
 public class User extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     private Long mUserId;
     private String mLoginName;
+    private String mFirstName;
+    private String mLastName;
     private String mPassword;
+    private String mConfirmPassword;
     private Map<Long, QuizGroup> mQuizGroup;
 
     @Id
@@ -82,6 +89,54 @@ public class User extends BaseEntity {
 
     public void setQuizGroup( Map<Long, QuizGroup> pQuizGroup ) {
         mQuizGroup = pQuizGroup;
+    }
+
+    /**
+     * @return the firstName
+     */
+    @Column(name = "FIRST_NAME")
+    public String getFirstName() {
+        return mFirstName;
+    }
+
+    /**
+     * @param pFirstName
+     *            the firstName to set
+     */
+    public void setFirstName( String pFirstName ) {
+        mFirstName = pFirstName;
+    }
+
+    /**
+     * @return the lastName
+     */
+    @Column(name = "LAST_NAME")
+    public String getLastName() {
+        return mLastName;
+    }
+
+    /**
+     * @param pLastName
+     *            the lastName to set
+     */
+    public void setLastName( String pLastName ) {
+        mLastName = pLastName;
+    }
+
+    /**
+     * @return the confirmPassword
+     */
+    @Transient
+    public String getConfirmPassword() {
+        return mConfirmPassword;
+    }
+
+    /**
+     * @param pConfirmPassword
+     *            the confirmPassword to set
+     */
+    public void setConfirmPassword( String pConfirmPassword ) {
+        mConfirmPassword = pConfirmPassword;
     }
 
     /**

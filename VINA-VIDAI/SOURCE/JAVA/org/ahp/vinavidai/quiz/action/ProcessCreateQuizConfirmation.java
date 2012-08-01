@@ -45,23 +45,15 @@ import org.slf4j.LoggerFactory;
  */
 public class ProcessCreateQuizConfirmation extends AhpAbstractProcessAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( ProcessCreateQuizConfirmation.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( ProcessCreateQuizConfirmation.class );
 
     @Override
-    public ActionForward process( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward process( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         CreateQuestionForm lCreateQuestionForm = ( CreateQuestionForm ) pActionForm;
-        String lSubmitAction = StringUtils.trimToNull( lCreateQuestionForm
-                .getSubmitAction() );
-        lCreateQuestionForm
-                .setNextPage( NavigateActions.DisplayCreateQuizConfirmation
-                        .toString() );
-        return pActionMapping
-                .findForward( NavigateActions.DisplayCreateQuizConfirmation
-                        .toString() );
+        String lSubmitAction = StringUtils.trimToNull( lCreateQuestionForm.getSubmitAction() );
+        lCreateQuestionForm.setNextPage( NavigateActions.DisplayCreateQuizConfirmation.toString() );
+        return pActionMapping.findForward( NavigateActions.DisplayCreateQuizConfirmation.toString() );
     }
 }

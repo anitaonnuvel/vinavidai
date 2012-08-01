@@ -42,26 +42,18 @@ import org.slf4j.LoggerFactory;
  */
 public class DisplayCreateQuizConfirmation extends AhpAbstractDisplayAction {
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( DisplayCreateQuizConfirmation.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( DisplayCreateQuizConfirmation.class );
 
     @Override
-    public ActionForward display( ActionMapping pActionMapping,
-            ActionForm pActionForm, HttpServletRequest pHttpServletRequest,
-            HttpServletResponse pHttpServletResponse ) {
-        User lLoggedInUser = AhpActionHelper
-                .getLoggedInUser( pHttpServletRequest );
+    public ActionForward display( ActionMapping pActionMapping, ActionForm pActionForm,
+            HttpServletRequest pHttpServletRequest, HttpServletResponse pHttpServletResponse ) {
+        User lLoggedInUser = AhpActionHelper.getLoggedInUser( pHttpServletRequest );
         CreateQuestionForm lCreateQuizForm = ( CreateQuestionForm ) pActionForm;
-        String lNextPage = StringUtils.trimToEmpty( lCreateQuizForm
-                .getNextPage() );
-        ActionForward lActionForward = pActionMapping
-                .findForward( NavigateActions.DisplayCreateQuizConfirmation
-                        .toString() );
-        if ( NavigateActions.DisplayCreateQuizConfirmation.toString().equals(
-                lNextPage ) ) {
-            lActionForward = pActionMapping
-                    .findForward( NavigateActions.DisplayCreateQuizConfirmation
-                            .toString() );
+        String lNextPage = StringUtils.trimToEmpty( lCreateQuizForm.getNextPage() );
+        ActionForward lActionForward = pActionMapping.findForward( NavigateActions.DisplayCreateQuizConfirmation
+                .toString() );
+        if ( NavigateActions.DisplayCreateQuizConfirmation.toString().equals( lNextPage ) ) {
+            lActionForward = pActionMapping.findForward( NavigateActions.DisplayCreateQuizConfirmation.toString() );
         }
         return lActionForward;
     }

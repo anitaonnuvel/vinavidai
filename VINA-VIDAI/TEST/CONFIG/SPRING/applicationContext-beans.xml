@@ -61,6 +61,13 @@
   </bean>
 
   <bean
+      id="registrationDao"
+      class="org.ahp.registration.dao.RegistrationDaoImpl"
+  >
+
+  </bean>
+
+  <bean
       name="/ProcessEditQuestion"
       class="org.ahp.vinavidai.quiz.action.ProcessEditQuestion"
   >
@@ -75,16 +82,6 @@
       class="org.ahp.vinavidai.dao.TestDaoImpl"
   >
 
-  </bean>
-
-  <bean
-      name="/TakeTest"
-      class="org.ahp.vinavidai.test.action.TakeTest"
-  >
-
-    <property name="testService">
-      <ref bean="testService"/>
-    </property>
   </bean>
 
   <bean
@@ -142,12 +139,58 @@
   </bean>
 
   <bean
+      name="registrationValidator"
+      class="org.ahp.vinavidai.validator.RegistrationValidator"
+  >
+
+    <property name="registrationService">
+      <ref bean="registrationService"/>
+    </property>
+  </bean>
+
+  <bean
+      id="forgotPasswordDao"
+      class="org.ahp.login.dao.ForgotPasswordDaoImpl"
+  >
+
+  </bean>
+
+  <bean
       name="/ProcessCreateQuiz"
       class="org.ahp.vinavidai.quiz.action.ProcessCreateQuiz"
   >
 
     <property name="quizService">
       <ref bean="quizService"/>
+    </property>
+  </bean>
+
+  <bean
+      id="forgotPasswordService"
+      class="org.ahp.login.forgot.password.service.ForgotPasswordService"
+  >
+
+    <property name="registrationDao">
+      <ref bean="registrationDao"/>
+    </property>
+    <property name="forgotPasswordDao">
+      <ref bean="forgotPasswordDao"/>
+    </property>
+    <property name="loginDao">
+      <ref bean="loginDao"/>
+    </property>
+    <property name="ahpJmsProducer">
+      <ref bean="ahpJmsProducer"/>
+    </property>
+  </bean>
+
+  <bean
+      name="forgotPasswordValidator"
+      class="org.ahp.vinavidai.validator.ForgotPasswordValidator"
+  >
+
+    <property name="registrationService">
+      <ref bean="registrationService"/>
     </property>
   </bean>
 
@@ -212,6 +255,16 @@
   </bean>
 
   <bean
+      name="ahpJmsProducer"
+      class="org.ahp.core.messaging.AhpJmsProducer"
+  >
+
+    <property name="jmsConnectionFactory">
+      <ref bean="jmsConnectionFactory"/>
+    </property>
+  </bean>
+
+  <bean
       id="ahpLoggerManager"
       class="org.ahp.core.managers.AhpLogBackLoggerManager"
   >
@@ -243,6 +296,16 @@
       class="org.ahp.login.dao.LoginDaoImpl"
   >
 
+  </bean>
+
+  <bean
+      id="registrationService"
+      class="org.ahp.registration.RegistrationService"
+  >
+
+    <property name="registrationDao">
+      <ref bean="registrationDao"/>
+    </property>
   </bean>
 
   <bean

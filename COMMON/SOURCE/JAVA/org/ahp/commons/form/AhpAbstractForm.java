@@ -35,8 +35,7 @@ public abstract class AhpAbstractForm extends ActionForm {
 
     private static final long serialVersionUID = 1L;
 
-    final static Logger LOGGER = LoggerFactory
-            .getLogger( AhpAbstractForm.class );
+    final static Logger LOGGER = LoggerFactory.getLogger( AhpAbstractForm.class );
 
     /** ${formName} */
     private String mFormName;
@@ -49,8 +48,8 @@ public abstract class AhpAbstractForm extends ActionForm {
     private String mNextPage;
 
     @Override
-    public void reset( ActionMapping pActionMapping,
-            HttpServletRequest pHttpServletRequest ) {
+    public void reset( ActionMapping pActionMapping, 
+                       HttpServletRequest pHttpServletRequest ) {
         super.reset( pActionMapping, pHttpServletRequest );
         /**
          * The key that the form is stored under in session scope's map
@@ -63,8 +62,7 @@ public abstract class AhpAbstractForm extends ActionForm {
         this.mCurrentAction = pActionMapping.getPath();
         this.mDisplayAction = this.mCurrentAction.startsWith( "/" + DISPLAY ) ? this.mCurrentAction
                 : this.mCurrentAction.replaceFirst( PROCESS, DISPLAY );
-        this.mProcessAction = this.mDisplayAction.replaceFirst( DISPLAY,
-                PROCESS );
+        this.mProcessAction = this.mDisplayAction.replaceFirst( DISPLAY, PROCESS );
         if ( isProcessAction( pActionMapping ) ) {
             resetForm( pActionMapping, pHttpServletRequest );
         }
@@ -84,12 +82,10 @@ public abstract class AhpAbstractForm extends ActionForm {
      * @param pActionMapping
      * @param pHttpServletRequest
      */
-    protected abstract void resetForm( ActionMapping pActionMapping,
-            HttpServletRequest pHttpServletRequest );
+    protected abstract void resetForm( ActionMapping pActionMapping, HttpServletRequest pHttpServletRequest );
 
     @Override
-    public ActionErrors validate( ActionMapping mapping,
-            HttpServletRequest request ) {
+    public ActionErrors validate( ActionMapping mapping, HttpServletRequest request ) {
         return new ActionErrors();
     }
 

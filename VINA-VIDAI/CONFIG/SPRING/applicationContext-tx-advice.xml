@@ -65,4 +65,32 @@
           <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
         </tx:attributes>
     </tx:advice>    
+    <aop:config>    
+        <aop:pointcut id="registrationServiceMethods" expression="execution(* org.ahp.registration.dao.IRegistrationDao.*(..))"/>
+        <aop:advisor advice-ref="registrationServiceTxAdvice" pointcut-ref="registrationServiceMethods"/>        
+    </aop:config>
+    <tx:advice id="registrationServiceTxAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+          <tx:method name="create*" propagation="REQUIRED"/>
+          <tx:method name="create*" propagation="REQUIRED"/>
+          <tx:method name="update*" propagation="REQUIRED"/>
+          <tx:method name="delete*" propagation="REQUIRED"/>
+          <tx:method name="load*" propagation="REQUIRED"/>
+          <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice> 
+    <aop:config>    
+        <aop:pointcut id="forgotPasswordServiceMethods" expression="execution(* org.ahp.login.dao.IForgotPasswordDao.*(..))"/>
+        <aop:advisor advice-ref="forgotPasswordServiceTxAdvice" pointcut-ref="forgotPasswordServiceMethods"/>        
+    </aop:config>
+    <tx:advice id="forgotPasswordServiceTxAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+          <tx:method name="create*" propagation="REQUIRED"/>
+          <tx:method name="create*" propagation="REQUIRED"/>
+          <tx:method name="update*" propagation="REQUIRED"/>
+          <tx:method name="delete*" propagation="REQUIRED"/>
+          <tx:method name="load*" propagation="REQUIRED"/>
+          <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
 </beans>
