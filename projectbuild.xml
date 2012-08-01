@@ -32,6 +32,13 @@
         <mkdir dir="${project.build}"/>
         <mkdir dir="${project.build.classes}/"/>
         <mkdir dir="${project.build.config}"/>
+        <mkdir dir="${project.build.config.struts}"/>
+        <mkdir dir="${project.build.config.spring}"/>
+        <mkdir dir="${project.build.config.logback}"/>
+        <mkdir dir="${project.build.config.ahp}"/>
+        <mkdir dir="${project.build.config.webservices}"/>
+        <mkdir dir="${project.build.config.webservices.wsdl}"/>
+        <mkdir dir="${project.build.config.webservices.cxf}"/>        
         <mkdir dir="${project.build.dist}"/>
         <mkdir dir="${project.build.lib}"/>
         <mkdir dir="${project.build.web.scripts}"/>
@@ -136,11 +143,11 @@
             <fileset dir="${project.source.web.images}"/>
             <fileset dir="${project.source.web.js}"/>
             <fileset dir="${project.source.web.jsp}"/>
-            <fileset dir="COMMON/${projects.source}/${projects.web}/${projects.html}"/>
-            <fileset dir="COMMON/${projects.source}/${projects.web}/${projects.css}"/>
-            <fileset dir="COMMON/${projects.source}/${projects.web}/${projects.images}"/>
-            <fileset dir="COMMON/${projects.source}/${projects.web}/${projects.js}"/>
-            <fileset dir="COMMON/${projects.source}/${projects.web}/${projects.jsp}"/>
+            <fileset dir="${projects.common}/${projects.source}/${projects.web}/${projects.html}"/>
+            <fileset dir="${projects.common}/${projects.source}/${projects.web}/${projects.css}"/>
+            <fileset dir="${projects.common}/${projects.source}/${projects.web}/${projects.images}"/>
+            <fileset dir="${projects.common}/${projects.source}/${projects.web}/${projects.js}"/>
+            <fileset dir="${projects.common}/${projects.source}/${projects.web}/${projects.jsp}"/>
         </copy>
     </target>
     
@@ -215,12 +222,12 @@
                 <include name="**/*.java"/>
                 <exclude name="**/*Filter.java" />          
             </fileset>
-            <fileset dir="COMMON/${projects.source}/${projects.java}">
+            <fileset dir="${projects.common}/${projects.source}/${projects.java}">
                 <include name="**/*.java"/>
                 <exclude name="**/*Filter.java" />          
             </fileset>
             <!-- creates the struts config file -->
-            <strutsconfigxml version="1.2" destdir="${project.build.config}" />
+            <strutsconfigxml version="1.2" destdir="${project.build.config.struts}" />
         </webdoclet>
         <taskdef name="springdoclet"
                  classname="xdoclet.modules.spring.SpringDocletTask"
@@ -237,30 +244,54 @@
                 <include name="**/*.java"/>
                 <exclude name="**/*Filter.java" />          
             </fileset>        
-            <springxml destdir="${project.build.config}"
+            <springxml destdir="${project.build.config.spring}"
                        destinationFile="applicationContext-beans.xml"/>
         </springdoclet>
         <copy todir="${project.test.config}/${projects.spring}"
-              file="${project.build.config}/applicationContext-beans.xml"/>
+              file="${project.build.config.spring}/applicationContext-beans.xml"/>
     </target>
     
     <target name="project-copy-config">
-        <copy todir="${project.build.config}">
+        <copy todir="${project.build.config.spring}">
             <fileset dir="${project.config.spring}">
                 <include name="applicationContext*.xml"/>
+                <include name="*-servlet.xml"/>
             </fileset> 
-            <fileset dir="${project.config}">
-                <include name="*.xml"/>
-                <include name="ahp.*.properties"/>
-            </fileset> 
+            <fileset dir="${project.config.spring}/${SERVLET-CONTAINER}">
+                <include name="applicationContext*.xml"/>
+            </fileset>
+        </copy>         
+        <copy todir="${project.build.config.logback}">
             <fileset dir="${project.config.sl4j.logback}">
-                <include name="*.xml"/>
+                <include name="logback.${DIST-ENV}.xml"/>
             </fileset>            
         </copy>         
+        <copy todir="${project.build.config.ahp}">
+            <fileset dir="${project.config.ahp}">
+                <include name="*.xml"/>
+                <include name="ahp.properties"/>
+            </fileset>
+            <fileset dir="${project.config.ahp}/${DIST-ENV-DIR}">
+                <include name="ahp.db.*.${DB}.properties"/>
+                <include name="ahp.jms.*.properties"/>
+            </fileset>            
+        </copy>
+        <copy todir="${project.build.config.webservices}">
+            <fileset dir="${project.config.webservices}">
+                <include name="**/*.xml"/>
+                <include name="**/*.wsdl"/>
+            </fileset>            
+        </copy>         
+        <move file="${project.build.config.ahp}/ahp.db.${DIST-ENV}.${DB}.properties" tofile="${project.build.config.ahp}/ahp.db.properties"/>
+        <move file="${project.build.config.ahp}/ahp.jms.${DIST-ENV}.properties" tofile="${project.build.config.ahp}/ahp.jms.properties"/>
+        <move file="${project.build.config.logback}/logback.${DIST-ENV}.xml" tofile="${project.build.config.logback}/logback.xml"/>
     </target>
     
     <target name="project-war-tomcat" 
-            depends="project-copy-dependency,project-xdoclet,project-copy-config">
+            depends="project-copy-dependency,project-xdoclet">
+        <antcall target="project-copy-config">
+            <param name="${param.servletcontainer.name}" value="${param.servletcontainer.value.tomcat}"/>
+        </antcall>   
         <echo>Creating War file for ${project.artifact.war.name}</echo>
         <war destfile="${project.build.dist}/${project.artifact.war.name}.war" 
              webxml="${project.config.javaee}/web.xml">
@@ -270,19 +301,53 @@
             <fileset dir="${project.source.web.js}"/>
             <fileset dir="${project.source.web.jsp}"/>
             <fileset dir="${project.build.web}"/>
-            <fileset dir="${projects.build}/COMMON/WEB"/>
+            <fileset dir="${projects.build}/${projects.common}/WEB"/>
             <metainf dir="${project.config.tomcat}"
                      includes="context.xml"/>
-            <webinf dir="${project.build.config}"
-                    includes="*.xml,*.properties"/>
+            <webinf dir="${project.build}"
+                    includes="${projects.config}/**/*.xml,${projects.config}/**/*.properties"/>
             <lib dir="${project.build.lib}"
                  includes="*.jar">
                  <exclude name="servlet-api.jar"/>
-            </lib>     
-            <!--classes dir="${project.build.classes}"/-->
+            </lib>
         </war>  
     </target>
 
+    <target name="project-prepare-jetty">
+        <echo>${project.build.standalone.jetty}</echo>
+        <mkdir dir="${project.build.standalone.jetty}"/>
+        <mkdir dir="${project.build.standalone.jetty.doc}"/>
+        <mkdir dir="${project.build.standalone.jetty.lib}"/>
+        <mkdir dir="${project.build.standalone.jetty.logs}"/>
+        <mkdir dir="${project.build.standalone.jetty.etc}"/>
+        <mkdir dir="${project.build.standalone.jetty.work}"/>
+    </target>
+    
+    <target name="project-war-jetty" 
+            depends="project-copy-dependency,project-xdoclet,project-prepare-jetty">
+        <echo>Creating War file for ${project.artifact.war.name}</echo>
+        <antcall target="project-copy-config">
+            <param name="${param.servletcontainer.name}" value="${param.servletcontainer.value.jetty}"/>
+        </antcall>
+        <echo>Creating War file for ${project.artifact.war.name}</echo>
+        <war destfile="${project.build.standalone.jetty}/${project.artifact.war.name}.war" 
+             webxml="${project.config.javaee}/web.xml">
+            <fileset dir="${project.source.web.html}"/>
+            <fileset dir="${project.source.web.css}"/>
+            <fileset dir="${project.source.web.images}"/>
+            <fileset dir="${project.source.web.js}"/>
+            <fileset dir="${project.source.web.jsp}"/>
+            <fileset dir="${project.build.web}"/>
+            <fileset dir="${projects.build}/${projects.common}/WEB"/>
+            <webinf dir="${project.build}"
+                    includes="${projects.config}/**/*.xml,${projects.config}/**/*.properties,${projects.config}/**/*.wsdl"/>
+            <lib dir="${project.build.lib}"
+                 includes="*.jar">
+                 <exclude name="servlet-api.jar"/>
+            </lib>
+        </war>  
+    </target>
+    
     <target name="project-deploy-tomcat">
         <delete dir="${projects.base.tomcat.home.webapps}/${project.artifact.war.name}"/>
         <delete file="${projects.base.tomcat.home.webapps}/${project.artifact.war.name}.war"/>
@@ -291,7 +356,7 @@
     </target>
 
     <target name="project-copy-web" depends="project-web">
-        <copy todir="${projects.base.tomcat.home}/${project.artifact.war.name}">
+        <copy todir="${projects.base.tomcat.home.webapps}/${project.artifact.war.name}">
             <fileset dir="${project.build.web}"/>
         </copy>    
     </target>
@@ -375,6 +440,7 @@
             <formatter type="xml" />
         </junit>
     </target>
+    
     <target name="test-project-generate-reports"
             depends="test-project">
         <junitreport todir="${projects.test.reports}">
