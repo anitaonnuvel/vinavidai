@@ -102,7 +102,7 @@ public class ForgotPasswordService extends AhpAbstractBusinessDelegate {
             Audit lAudit = AhpBusinessDelegate.createAudit( lUserUnderResetPassword );
             pUser.setAudit( lAudit );
             this.mForgotPasswordDao.updateUserPassword( lUserUnderResetPassword );
-            this.mAhpJmsProducer.sendTextMessage( "Password is reset for" + pUser.getLoginName() , 
+            this.mAhpJmsProducer.sendTextMessage( "Password is reset for :: " + pUser.getLoginName() , 
                                                   AhpJmsDestinationTypes.Queue, 
                                                   AhpJmsDestinationNames.QueueEmailForgotPassword );
             return lUserUnderResetPassword;

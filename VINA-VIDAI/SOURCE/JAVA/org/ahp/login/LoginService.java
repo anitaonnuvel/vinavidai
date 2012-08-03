@@ -50,11 +50,9 @@ public class LoginService extends AhpAbstractBusinessDelegate {
     }
 
     public boolean doesUserExist( String pLoginName ) {
-        User lUser = mLoginDao.loadUserByLoginName( pLoginName );
-        if ( lUser != null ) {
-            return true;
-        }
-        return false;
+        User lUser = new User();
+        lUser.setLoginName( pLoginName );
+        return mLoginDao.doesUserExist( lUser );
     }
 
     /**

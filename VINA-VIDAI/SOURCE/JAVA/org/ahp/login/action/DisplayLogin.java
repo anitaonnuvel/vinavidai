@@ -57,6 +57,7 @@ public class DisplayLogin extends AhpAbstractDisplayAction {
                                   HttpServletResponse pHttpServletResponse ) {
         LoginForm lLoginForm = ( LoginForm ) pActionForm;
         if ( NavigateActions.DisplayHomePage.toString().equals( StringUtils.trimToEmpty( lLoginForm.getNextPage() ) ) ) {
+            LOGGER.debug( "Login was successfull" );
             return pActionMapping.findForward( NavigateActions.DisplayHomePage.toString() );
         }
         return pActionMapping.findForward( NavigateActions.DisplayLogin.toString() );

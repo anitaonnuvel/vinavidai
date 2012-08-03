@@ -16,6 +16,7 @@
 package org.ahp.login.action;
 
 import static org.ahp.core.constants.HttpSessionAttributeConstants.LOGGED_IN_USER;
+import static org.ahp.login.validator.BaseValidator.LOGIN_ERROR_KEY_PREFIX;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,6 +80,14 @@ public class ProcessLogin extends AhpAbstractProcessAction {
             if ( SubmitActions.LOGIN.toString().equals( lSubmitAction ) ) {
                 String lLoginName = lLoginForm.getLoginName();
                 String lPassword = lLoginForm.getPassword();
+                if ( !mLoginService.doesUserExist( lLoginName ) ) {
+                    ActionMessages lActionMessages = new ActionMessages();
+                    lActionMessages.add( ActionMessages.GLOBAL_MESSAGE, 
+                                         new ActionMessage( LOGIN_ERROR_KEY_PREFIX + ".loginname.notexists" ) );
+                    this.saveErrors( pHttpServletRequest, lActionMessages );
+                    lLoginForm.setNextPage( NavigateActions.DisplayLogin.toString() );
+                    return pActionMapping.findForward( NavigateActions.DisplayLogin.toString() );
+                }
                 boolean lAuthenticated = mLoginService.isUserAuthenticated( lLoginName, lPassword );
                 if ( lAuthenticated ) {
                     LOGGER.debug( "Login Successful" );

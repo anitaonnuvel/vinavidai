@@ -69,6 +69,7 @@ public class AhpJmsProducer {
             lMessageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);
             //lMessageProducer.setTimeToLive( timeToLive );
             Message lTextMessage = lSession.createTextMessage( pTextMessage );
+            LOGGER.debug( "AhpJmsProducer sending message to Destination " + pAhpJmsDestinationNames.toString() + " TextMessage :: \n" + pTextMessage );            
             lMessageProducer.send( lTextMessage );
             lSession.commit();
         } catch ( JMSException exJms ) {

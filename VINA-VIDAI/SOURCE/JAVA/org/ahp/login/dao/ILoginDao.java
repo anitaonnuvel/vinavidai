@@ -27,4 +27,10 @@ public interface ILoginDao {
     public User loadUserByLoginName( String pLoginName );
 
     public User loadUserByLoginId( Long pLoginId );
+
+    /**
+     * @param pUser
+     * @return
+     */
+    boolean doesUserExist( User pUser );
 }

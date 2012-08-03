@@ -18,7 +18,6 @@
  */
 package org.ahp.core.messaging;
 
-import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -26,7 +25,6 @@ import javax.jms.TextMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Anita Onnuvel
@@ -35,14 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AhpJmsConsumer implements MessageListener {
     
     final static Logger LOGGER = LoggerFactory.getLogger( AhpJmsConsumer.class );
-    
-    private ConnectionFactory mJmsConnectionFactory;
-    
-    @Autowired
-    public void setJmsConnectionFactory( ConnectionFactory pJmsConnectionFactory ){
-        this.mJmsConnectionFactory = pJmsConnectionFactory;
-    }
-        
+            
     /* (non-Javadoc)
      * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
      */
@@ -50,7 +41,7 @@ public class AhpJmsConsumer implements MessageListener {
     public void onMessage( Message pMessage ) {
         if ( pMessage instanceof TextMessage ) {
             try {
-                System.out.println( ( ( TextMessage) pMessage).getText() );
+                LOGGER.debug( "AhpJmsProducer receiving messageID :: " + pMessage.getJMSMessageID() + " TextMessage :: \n" + ( ( TextMessage) pMessage).getText() );
             }
             catch ( JMSException exJms ) {
                 throw new RuntimeException( exJms );

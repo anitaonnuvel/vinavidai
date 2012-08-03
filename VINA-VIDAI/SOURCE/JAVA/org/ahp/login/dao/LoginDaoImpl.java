@@ -15,9 +15,12 @@
  */
 package org.ahp.login.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
 
 import org.ahp.core.pojo.User;
 import org.slf4j.Logger;
@@ -52,6 +55,20 @@ public class LoginDaoImpl implements ILoginDao {
                 createQuery( "SELECT user FROM User user WHERE LOWER(user.loginName) like LOWER('%" + pLoginName + "%')" ).getSingleResult();
     }
 
+    /* (non-Javadoc)
+     * @see org.ahp.registration.dao.IRegistrationDao#doesUserExist(org.ahp.core.pojo.User)
+     */
+    @Override
+    public boolean doesUserExist( User pUser ) {
+        Query lNamedQUery = mEntityManager.createNamedQuery( "doesUserExist" );
+        lNamedQUery.setMaxResults( 1 );
+        lNamedQUery.setParameter( "registrationName", pUser.getLoginName() );
+        List lResultList = lNamedQUery.getResultList();  
+        if ( lResultList != null && !lResultList.isEmpty() )
+            return true;
+        return false;
+    }
+    
     /**
      * 
      * @param pLoginId
