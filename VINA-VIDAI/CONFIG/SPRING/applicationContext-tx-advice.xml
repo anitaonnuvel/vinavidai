@@ -72,7 +72,6 @@
     <tx:advice id="registrationServiceTxAdvice" transaction-manager="transactionManager">
         <tx:attributes>
           <tx:method name="create*" propagation="REQUIRED"/>
-          <tx:method name="create*" propagation="REQUIRED"/>
           <tx:method name="update*" propagation="REQUIRED"/>
           <tx:method name="delete*" propagation="REQUIRED"/>
           <tx:method name="load*" propagation="REQUIRED"/>
@@ -85,7 +84,6 @@
     </aop:config>
     <tx:advice id="forgotPasswordServiceTxAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-          <tx:method name="create*" propagation="REQUIRED"/>
           <tx:method name="create*" propagation="REQUIRED"/>
           <tx:method name="update*" propagation="REQUIRED"/>
           <tx:method name="delete*" propagation="REQUIRED"/>
