@@ -46,8 +46,7 @@ public class QuizConsoleForm extends AhpAbstractForm {
                                   HttpServletRequest pHttpServletRequest ) {
         ActionErrors lActionErrors = new ActionErrors();
         String lSubmitAction = StringUtils.trimToNull( this.getSubmitAction() );
-        if ( lSubmitAction != null
-                && SubmitActions.NEXT.toString().equals( ( lSubmitAction ) ) ) {
+        if ( lSubmitAction != null && SubmitActions.NEXT.toString().equals( ( lSubmitAction ) ) ) {
         }
         return lActionErrors;
     }
