@@ -75,7 +75,7 @@ public class AhpMessageResource implements Serializable {
     }
 
     /***
-    * again
+    * again again
     */
     public String toString() {
         return AhpStringUtil.reflectionToString( this );
